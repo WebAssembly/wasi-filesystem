@@ -1,0 +1,97 @@
+;; WASI Filesystem Direntry API.
+;;
+;; A direntry is an entry in a directory, which may be a file, directory,
+;; symlink, or other filesystem object.
+;;
+;; Some content here is derived from [CloudABI](https://github.com/NuxiNL/cloudabi).
+;;
+;; This is a `witx` file. See [here](https://github.com/WebAssembly/WASI/tree/master/docs/witx.md)
+;; for an explanation of what that means.
+
+(use "typenames.witx")
+
+(module $wasi_ephemeral_direntry
+  ;;; Linear memory to be accessed by WASI functions that need it.
+  (import "memory" (memory))
+
+  ;;; Synchronize the data of a direntry to disk.
+  ;;; Note: This is similar to `fdatasync` in POSIX.
+  (@interface func (export "datasync")
+    (param $fd $fd)
+    (result $error $errno)
+  )
+
+  ;;; Get the attributes of a file descriptor.
+  ;;; Note: This returns similar flags to `fsync(fd, F_GETFL)` in POSIX, as well as additional fields.
+  (@interface func (export "fdstat_get")
+    (param $fd $fd)
+    (result $error $errno)
+    ;;; The buffer where the file descriptor's attributes are stored.
+    (result $stat $fdstat)
+  )
+
+  ;;; Adjust the flags associated with a file descriptor.
+  ;;; Note: This is similar to `fcntl(fd, F_SETFL, flags)` in POSIX.
+  (@interface func (export "fdstat_set_flags")
+    (param $fd $fd)
+    ;;; The desired values of the file descriptor flags.
+    (param $flags $fdflags)
+    (result $error $errno)
+  )
+
+  ;;; Adjust the rights associated with a direntry.
+  ;;; This can only be used to remove rights, and returns `errno::notcapable` if called in a way that would attempt to add rights
+  (@interface func (export "fdstat_set_rights")
+    (param $fd $fd)
+    ;;; The desired rights of the file descriptor.
+    (param $fs_rights_base $rights)
+    (param $fs_rights_inheriting $rights)
+    (result $error $errno)
+  )
+
+  ;;; Return the attributes of a direntry.
+  (@interface func (export "filestat_get")
+    (param $fd $fd)
+    (result $error $errno)
+    ;;; The buffer where the direntry's attributes are stored.
+    (result $buf $filestat)
+  )
+
+  ;;; Adjust the timestamps of an open direntry.
+  ;;; Note: This is similar to `futimens` in POSIX.
+  (@interface func (export "filestat_set_times")
+    (param $fd $fd)
+    ;;; The desired values of the data access timestamp.
+    (param $atim $timestamp)
+    ;;; The desired values of the data modification timestamp.
+    (param $mtim $timestamp)
+    ;;; A bitmask indicating which timestamps to adjust.
+    (param $fst_flags $fstflags)
+    (result $error $errno)
+  )
+
+  ;;; Set the permissions of a direntry.
+  ;;;
+  ;;; This sets the permissions associated with a direntry in
+  ;;; a filesystem at the time it is called. The ability to actually access
+  ;;; a direntry may depend on additional permissions not reflected here.
+  ;;;
+  ;;; Note: This is similar `fchmod` in POSIX.
+  ;;;
+  ;;; Unlike POSIX, this doesn't expose a user/group/other distinction;
+  ;;; implementations in POSIX environments are suggested to consult the
+  ;;; umask to determine which of the user/group/other flags to modify.
+  (@interface func (export "permissions_set")
+    (param $fd $fd)
+    ;;; The permissions associated with the direntry.
+    (param $permissions $permissions)
+    (result $error $errno)
+  )
+
+  ;;; Synchronize the data and metadata of a direntry to disk.
+  ;;; Note: This is similar to `fsync` in POSIX.
+  (@interface func (export "sync")
+    (param $fd $fd)
+    (result $error $errno)
+  )
+)

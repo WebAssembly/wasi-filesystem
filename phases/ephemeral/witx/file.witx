@@ -1,0 +1,126 @@
+;; WASI Filesystem File API.
+;;
+;; Some content here is derived from [CloudABI](https://github.com/NuxiNL/cloudabi).
+;;
+;; This is a `witx` file. See [here](https://github.com/WebAssembly/WASI/tree/master/docs/witx.md)
+;; for an explanation of what that means.
+
+(use "typenames.witx")
+
+(module $wasi_ephemeral_file
+  ;;; Linear memory to be accessed by WASI functions that need it.
+  (import "memory" (memory))
+
+  ;;; Provide file advisory information on a file descriptor.
+  ;;; Note: This is similar to `posix_fadvise` in POSIX.
+  (@interface func (export "advise")
+    (param $fd $fd)
+    ;;; The offset within the file to which the advisory applies.
+    (param $offset $filesize)
+    ;;; The length of the region to which the advisory applies.
+    (param $len $filesize)
+    ;;; The advice.
+    (param $advice $advice)
+    (result $error $errno)
+  )
+
+  ;;; Force the allocation of space in a file.
+  ;;; Note: This is similar to `posix_fallocate` in POSIX.
+  (@interface func (export "allocate")
+    (param $fd $fd)
+    ;;; The offset at which to start the allocation.
+    (param $offset $filesize)
+    ;;; The length of the area that is allocated.
+    (param $len $filesize)
+    (result $error $errno)
+  )
+
+  ;;; Adjust the size of an open file. If this increases the file's size, the extra bytes are filled with zeros.
+  ;;; Note: This is similar to `ftruncate` in POSIX.
+  (@interface func (export "filestat_set_size")
+    (param $fd $fd)
+    ;;; The desired file size.
+    (param $size $filesize)
+    (result $error $errno)
+  )
+
+  ;;; Adjust the timestamps of an open file or directory.
+  ;;; Note: This is similar to `futimens` in POSIX.
+  (@interface func (export "filestat_set_times")
+    (param $fd $fd)
+    ;;; The desired values of the data access timestamp.
+    (param $atim $timestamp)
+    ;;; The desired values of the data modification timestamp.
+    (param $mtim $timestamp)
+    ;;; A bitmask indicating which timestamps to adjust.
+    (param $fst_flags $fstflags)
+    (result $error $errno)
+  )
+
+  ;;; Set the permissions of a file or directory.
+  ;;;
+  ;;; This sets the permissions associated with a file or directory in
+  ;;; a filesystem at the time it is called. The ability to actually access
+  ;;; a file or directory may depend on additional permissions not reflected
+  ;;; here.
+  ;;;
+  ;;; Note: This is similar `fchmod` in POSIX.
+  ;;;
+  ;;; Unlike POSIX, this doesn't expose a user/group/other distinction;
+  ;;; implementations in POSIX environments are suggested to consult the
+  ;;; umask to determine which of the user/group/other flags to modify.
+  (@interface func (export "permissions_set")
+    (param $fd $fd)
+    ;;; The permissions associated with the file.
+    (param $permissions $permissions)
+    (result $error $errno)
+  )
+
+  ;;; Read from a file descriptor, without using and updating the file descriptor's offset.
+  ;;; Note: This is similar to `preadv` in POSIX.
+  (@interface func (export "pread")
+    (param $fd $fd)
+    ;;; List of scatter/gather vectors in which to store data.
+    (param $iovs $iovec_array)
+    ;;; The offset within the file at which to read.
+    (param $offset $filesize)
+    (result $error $errno)
+    ;;; The number of bytes read.
+    (result $nread $size)
+  )
+
+  ;;; Write to a file descriptor, without using and updating the file descriptor's offset.
+  ;;; Note: This is similar to `pwritev` in POSIX.
+  (@interface func (export "pwrite")
+    (param $fd $fd)
+    ;;; List of scatter/gather vectors from which to retrieve data.
+    (param $iovs $ciovec_array)
+    ;;; The offset within the file at which to write.
+    (param $offset $filesize)
+    (result $error $errno)
+    ;;; The number of bytes written.
+    (result $nwritten $size)
+  )
+
+  ;;; Move the offset of a file descriptor.
+  ;;; Note: This is similar to `lseek` in POSIX.
+  (@interface func (export "seek")
+    (param $fd $fd)
+    ;;; The number of bytes to move.
+    (param $offset $filedelta)
+    ;;; The base from which the offset is relative.
+    (param $whence $whence)
+    (result $error $errno)
+    ;;; The new offset of the file descriptor, relative to the start of the file.
+    (result $newoffset $filesize)
+  )
+
+  ;;; Return the current offset of a file descriptor.
+  ;;; Note: This is similar to `lseek(fd, 0, SEEK_CUR)` in POSIX.
+  (@interface func (export "tell")
+    (param $fd $fd)
+    (result $error $errno)
+    ;;; The current offset of the file descriptor, relative to the start of the file.
+    (result $offset $filesize)
+  )
+)
