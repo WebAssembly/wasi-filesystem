@@ -23,16 +23,9 @@ pub fn ephemeral() -> Result<Vec<PathBuf>> {
     let root = repo_root()?;
     let ephemeral = root.join("phases/ephemeral/witx");
     let paths = vec![
-        ephemeral.join("wasi_ephemeral_args.witx"),
-        ephemeral.join("wasi_ephemeral_clock.witx"),
-        ephemeral.join("wasi_ephemeral_environ.witx"),
-        ephemeral.join("wasi_ephemeral_fd.witx"),
-        ephemeral.join("wasi_ephemeral_path.witx"),
-        ephemeral.join("wasi_ephemeral_poll.witx"),
-        ephemeral.join("wasi_ephemeral_proc.witx"),
-        ephemeral.join("wasi_ephemeral_random.witx"),
-        ephemeral.join("wasi_ephemeral_sched.witx"),
-        ephemeral.join("wasi_ephemeral_sock.witx"),
+        ephemeral.join("file.witx"),
+        ephemeral.join("directory.witx"),
+        ephemeral.join("direntry.witx"),
     ];
     ensure_exists(&paths)?;
     Ok(paths)

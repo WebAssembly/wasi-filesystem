@@ -22,29 +22,14 @@ Size: 8
 
 Alignment: 8
 
-## <a href="#clockid" name="clockid"></a> `clockid`: Enum(`u32`)
-Identifiers for clocks.
-
-Size: 4
-
-Alignment: 4
-
-### Variants
-- <a href="#clockid.realtime" name="clockid.realtime"></a> `realtime`
-The clock measuring real time. Time value zero corresponds with
-1970-01-01T00:00:00Z.
-
-- <a href="#clockid.monotonic" name="clockid.monotonic"></a> `monotonic`
-The store-wide monotonic clock, which is defined as a clock measuring
-real time, whose value cannot be adjusted and which cannot have negative
-clock jumps. The epoch of this clock is undefined. The absolute time
-value of this clock therefore has no meaning.
-
 ## <a href="#errno" name="errno"></a> `errno`: Enum(`u16`)
 Error codes returned by functions.
+
 Not all of these error codes are returned by the functions provided by this
 API; some are used in higher-level library layers, and others are provided
 merely for alignment with POSIX.
+
+TODO: Introduce enum inheritance and factor out module-specific errno spaces.
 
 Size: 2
 
@@ -285,6 +270,8 @@ Extension: Capabilities insufficient.
 ## <a href="#rights" name="rights"></a> `rights`: Flags(`u64`)
 File descriptor rights, determining which actions may be performed.
 
+TODO: When files and streams are split, move these into the filesystem module.
+
 Size: 8
 
 Alignment: 8
@@ -389,14 +376,16 @@ The right to invoke `path_remove_directory`.
 The right to invoke `path_unlink_file`.
 
 - <a href="#rights.poll_fd_readwrite" name="rights.poll_fd_readwrite"></a> `poll_fd_readwrite`
-If [`rights::fd_read`](#rights.fd_read) is set, includes the right to invoke `poll_oneoff` to subscribe to [`eventtype::fd_read`](#eventtype.fd_read).
-If [`rights::fd_write`](#rights.fd_write) is set, includes the right to invoke `poll_oneoff` to subscribe to [`eventtype::fd_write`](#eventtype.fd_write).
+If [`rights::fd_read`](#rights.fd_read) is set, includes the right to invoke `poll_oneoff` to subscribe to `eventtype::fd_read`.
+If [`rights::fd_write`](#rights.fd_write) is set, includes the right to invoke `poll_oneoff` to subscribe to `eventtype::fd_write`.
 
 - <a href="#rights.sock_shutdown" name="rights.sock_shutdown"></a> `sock_shutdown`
 The right to invoke `sock_shutdown`.
 
 ## <a href="#fd" name="fd"></a> `fd`
 A file descriptor handle.
+
+TODO: Split files and streams and use different handle types.
 
 Size: 4
 
@@ -486,13 +475,6 @@ Alignment: 8
 - <a href="#dircookie.start" name="dircookie.start"></a> `start`
 In an `fd_readdir` call, this value signifies the start of the directory.
 
-## <a href="#dirnamlen" name="dirnamlen"></a> `dirnamlen`: `u32`
-The type for the [`dirent::d_namlen`](#dirent.d_namlen) field of [`dirent`](#dirent).
-
-Size: 4
-
-Alignment: 4
-
 ## <a href="#inode" name="inode"></a> `inode`: `u64`
 File serial number that is unique within its file system.
 
@@ -534,34 +516,6 @@ The file refers to a symbolic link inode.
 
 - <a href="#filetype.fifo" name="filetype.fifo"></a> `fifo`
 The file descriptor or file refers to a FIFO.
-
-## <a href="#dirent" name="dirent"></a> `dirent`: Struct
-A directory entry.
-
-Size: 24
-
-Alignment: 8
-
-### Struct members
-- <a href="#dirent.d_next" name="dirent.d_next"></a> `d_next`: [`dircookie`](#dircookie)
-The offset of the next directory entry stored in this directory.
-
-Offset: 0
-
-- <a href="#dirent.d_ino" name="dirent.d_ino"></a> `d_ino`: [`inode`](#inode)
-The serial number of the file referred to by this directory entry.
-
-Offset: 8
-
-- <a href="#dirent.d_namlen" name="dirent.d_namlen"></a> `d_namlen`: [`dirnamlen`](#dirnamlen)
-The length of the name of the directory entry.
-
-Offset: 16
-
-- <a href="#dirent.d_type" name="dirent.d_type"></a> `d_type`: [`filetype`](#filetype)
-The type of the file referred to by this directory entry.
-
-Offset: 20
 
 ## <a href="#advice" name="advice"></a> `advice`: Enum(`u8`)
 File or memory access pattern advisory information.
@@ -663,13 +617,13 @@ Alignment: 2
 Adjust the last data access timestamp to the value stored in [`filestat::atim`](#filestat.atim).
 
 - <a href="#fstflags.atim_now" name="fstflags.atim_now"></a> `atim_now`
-Adjust the last data access timestamp to the time of clock [`clockid::realtime`](#clockid.realtime).
+Adjust the last data access timestamp to the time of clock `clockid::realtime`.
 
 - <a href="#fstflags.mtim" name="fstflags.mtim"></a> `mtim`
 Adjust the last data modification timestamp to the value stored in [`filestat::mtim`](#filestat.mtim).
 
 - <a href="#fstflags.mtim_now" name="fstflags.mtim_now"></a> `mtim_now`
-Adjust the last data modification timestamp to the time of clock [`clockid::realtime`](#clockid.realtime).
+Adjust the last data modification timestamp to the time of clock `clockid::realtime`.
 
 ## <a href="#lookupflags" name="lookupflags"></a> `lookupflags`: Flags(`u32`)
 Flags determining the method of how paths are resolved.
@@ -796,156 +750,9 @@ Last file status change timestamp.
 
 Offset: 56
 
-## <a href="#userdata" name="userdata"></a> `userdata`: `u64`
-User-provided value that may be attached to objects that is retained when
-extracted from the implementation.
-
-Size: 8
-
-Alignment: 8
-
-## <a href="#eventtype" name="eventtype"></a> `eventtype`: Enum(`u8`)
-Type of a subscription to an event or its occurrence.
-
-Size: 1
-
-Alignment: 1
-
-### Variants
-- <a href="#eventtype.clock" name="eventtype.clock"></a> `clock`
-The time value of clock [`subscription_clock::id`](#subscription_clock.id) has
-reached timestamp [`subscription_clock::timeout`](#subscription_clock.timeout).
-
-- <a href="#eventtype.fd_read" name="eventtype.fd_read"></a> `fd_read`
-File descriptor [`subscription_fd_readwrite::fd`](#subscription_fd_readwrite.fd) has data
-available for reading. This event always triggers for regular files.
-
-- <a href="#eventtype.fd_write" name="eventtype.fd_write"></a> `fd_write`
-File descriptor [`subscription_fd_readwrite::fd`](#subscription_fd_readwrite.fd) has capacity
-available for writing. This event always triggers for regular files.
-
-## <a href="#eventrwflags" name="eventrwflags"></a> `eventrwflags`: Flags(`u16`)
-The state of the file descriptor subscribed to with
-[`eventtype::fd_read`](#eventtype.fd_read) or [`eventtype::fd_write`](#eventtype.fd_write).
-
-Size: 2
-
-Alignment: 2
-
-### Flags
-- <a href="#eventrwflags.fd_readwrite_hangup" name="eventrwflags.fd_readwrite_hangup"></a> `fd_readwrite_hangup`
-The peer of this socket has closed or disconnected.
-
-## <a href="#event_fd_readwrite" name="event_fd_readwrite"></a> `event_fd_readwrite`: Struct
-The contents of an [`event`](#event) when type is [`eventtype::fd_read`](#eventtype.fd_read) or
-[`eventtype::fd_write`](#eventtype.fd_write).
-
-Size: 16
-
-Alignment: 8
-
-### Struct members
-- <a href="#event_fd_readwrite.nbytes" name="event_fd_readwrite.nbytes"></a> `nbytes`: [`filesize`](#filesize)
-The number of bytes available for reading or writing.
-
-Offset: 0
-
-- <a href="#event_fd_readwrite.flags" name="event_fd_readwrite.flags"></a> `flags`: [`eventrwflags`](#eventrwflags)
-The state of the file descriptor.
-
-Offset: 8
-
-## <a href="#event_u" name="event_u"></a> `event_u`: Union
-The contents of an [`event`](#event).
-
-Size: 24
-
-Alignment: 8
-
-### Union Layout
-- tag_size: 1
-- tag_align: 1
-- contents_offset: 8
-- contents_size: 16
-- contents_align: 8
-### Union variants
-- <a href="#event_u.fd_read" name="event_u.fd_read"></a> `fd_read`: [`event_fd_readwrite`](#event_fd_readwrite)
-
-- <a href="#event_u.fd_write" name="event_u.fd_write"></a> `fd_write`: [`event_fd_readwrite`](#event_fd_readwrite)
-
-- <a href="#event_u.clock" name="event_u.clock"></a> `clock`
-
-## <a href="#event" name="event"></a> `event`: Struct
-An event that occurred.
-
-Size: 40
-
-Alignment: 8
-
-### Struct members
-- <a href="#event.userdata" name="event.userdata"></a> `userdata`: [`userdata`](#userdata)
-User-provided value that got attached to [`subscription::userdata`](#subscription.userdata).
-
-Offset: 0
-
-- <a href="#event.error" name="event.error"></a> `error`: [`errno`](#errno)
-If non-zero, an error that occurred while processing the subscription request.
-
-Offset: 8
-
-- <a href="#event.u" name="event.u"></a> `u`: [`event_u`](#event_u)
-The type of the event that occurred, and the contents of the event
-
-Offset: 16
-
-## <a href="#subclockflags" name="subclockflags"></a> `subclockflags`: Flags(`u16`)
-Flags determining how to interpret the timestamp provided in
-[`subscription_clock::timeout`](#subscription_clock.timeout).
-
-Size: 2
-
-Alignment: 2
-
-### Flags
-- <a href="#subclockflags.subscription_clock_abstime" name="subclockflags.subscription_clock_abstime"></a> `subscription_clock_abstime`
-If set, treat the timestamp provided in
-[`subscription_clock::timeout`](#subscription_clock.timeout) as an absolute timestamp of clock
-[`subscription_clock::id`](#subscription_clock.id). If clear, treat the timestamp
-provided in [`subscription_clock::timeout`](#subscription_clock.timeout) relative to the
-current time value of clock [`subscription_clock::id`](#subscription_clock.id).
-
-## <a href="#subscription_clock" name="subscription_clock"></a> `subscription_clock`: Struct
-The contents of a [`subscription`](#subscription) when type is [`eventtype::clock`](#eventtype.clock).
-
-Size: 32
-
-Alignment: 8
-
-### Struct members
-- <a href="#subscription_clock.id" name="subscription_clock.id"></a> `id`: [`clockid`](#clockid)
-The clock against which to compare the timestamp.
-
-Offset: 0
-
-- <a href="#subscription_clock.timeout" name="subscription_clock.timeout"></a> `timeout`: [`timestamp`](#timestamp)
-The absolute or relative timestamp.
-
-Offset: 8
-
-- <a href="#subscription_clock.precision" name="subscription_clock.precision"></a> `precision`: [`timestamp`](#timestamp)
-The amount of time that the implementation may wait additionally
-to coalesce with other events.
-
-Offset: 16
-
-- <a href="#subscription_clock.flags" name="subscription_clock.flags"></a> `flags`: [`subclockflags`](#subclockflags)
-Flags specifying whether the timeout is absolute or relative
-
-Offset: 24
-
 ## <a href="#subscription_fd_readwrite" name="subscription_fd_readwrite"></a> `subscription_fd_readwrite`: Struct
-The contents of a [`subscription`](#subscription) when type is type is
-[`eventtype::fd_read`](#eventtype.fd_read) or [`eventtype::fd_write`](#eventtype.fd_write).
+The contents of a `subscription` when type is type is
+`eventtype::fd_read` or `eventtype::fd_write`.
 
 Size: 4
 
@@ -957,255 +764,8 @@ The file descriptor on which to wait for it to become ready for reading or writi
 
 Offset: 0
 
-## <a href="#subscription_u" name="subscription_u"></a> `subscription_u`: Union
-The contents of a [`subscription`](#subscription).
-
-Size: 40
-
-Alignment: 8
-
-### Union Layout
-- tag_size: 1
-- tag_align: 1
-- contents_offset: 8
-- contents_size: 32
-- contents_align: 8
-### Union variants
-- <a href="#subscription_u.clock" name="subscription_u.clock"></a> `clock`: [`subscription_clock`](#subscription_clock)
-
-- <a href="#subscription_u.fd_read" name="subscription_u.fd_read"></a> `fd_read`: [`subscription_fd_readwrite`](#subscription_fd_readwrite)
-
-- <a href="#subscription_u.fd_write" name="subscription_u.fd_write"></a> `fd_write`: [`subscription_fd_readwrite`](#subscription_fd_readwrite)
-
-## <a href="#subscription" name="subscription"></a> `subscription`: Struct
-Subscription to an event.
-
-Size: 48
-
-Alignment: 8
-
-### Struct members
-- <a href="#subscription.userdata" name="subscription.userdata"></a> `userdata`: [`userdata`](#userdata)
-User-provided value that is attached to the subscription in the
-implementation and returned through [`event::userdata`](#event.userdata).
-
-Offset: 0
-
-- <a href="#subscription.u" name="subscription.u"></a> `u`: [`subscription_u`](#subscription_u)
-The type of the event to which to subscribe, and the contents of the subscription.
-
-Offset: 8
-
-## <a href="#exitcode" name="exitcode"></a> `exitcode`: `u32`
-Exit code generated by a process when exiting.
-
-Size: 4
-
-Alignment: 4
-
-## <a href="#riflags" name="riflags"></a> `riflags`: Flags(`u16`)
-Flags provided to `sock_recv`.
-
-Size: 2
-
-Alignment: 2
-
-### Flags
-- <a href="#riflags.recv_peek" name="riflags.recv_peek"></a> `recv_peek`
-Returns the message without removing it from the socket's receive queue.
-
-- <a href="#riflags.recv_waitall" name="riflags.recv_waitall"></a> `recv_waitall`
-On byte-stream sockets, block until the full amount of data can be returned.
-
-## <a href="#roflags" name="roflags"></a> `roflags`: Flags(`u16`)
-Flags returned by `sock_recv`.
-
-Size: 2
-
-Alignment: 2
-
-### Flags
-- <a href="#roflags.recv_data_truncated" name="roflags.recv_data_truncated"></a> `recv_data_truncated`
-Returned by `sock_recv`: Message data has been truncated.
-
-## <a href="#siflags" name="siflags"></a> `siflags`: `u16`
-Flags provided to `sock_send`. As there are currently no flags
-defined, it must be set to zero.
-
-Size: 2
-
-Alignment: 2
-
-## <a href="#sdflags" name="sdflags"></a> `sdflags`: Flags(`u8`)
-Which channels on a socket to shut down.
-
-Size: 1
-
-Alignment: 1
-
-### Flags
-- <a href="#sdflags.rd" name="sdflags.rd"></a> `rd`
-Disables further receive operations.
-
-- <a href="#sdflags.wr" name="sdflags.wr"></a> `wr`
-Disables further send operations.
-
-## <a href="#preopentype" name="preopentype"></a> `preopentype`: Enum(`u8`)
-Identifiers for preopened capabilities.
-
-Size: 1
-
-Alignment: 1
-
-### Variants
-- <a href="#preopentype.dir" name="preopentype.dir"></a> `dir`
-A pre-opened directory.
-
-## <a href="#prestat_dir" name="prestat_dir"></a> `prestat_dir`: Struct
-The contents of a [`prestat`](#prestat) when its type is [`preopentype::dir`](#preopentype.dir).
-
-Size: 4
-
-Alignment: 4
-
-### Struct members
-- <a href="#prestat_dir.pr_name_len" name="prestat_dir.pr_name_len"></a> `pr_name_len`: [`size`](#size)
-The length of the directory name for use with `fd_prestat_dir_name`.
-
-Offset: 0
-
-## <a href="#prestat" name="prestat"></a> `prestat`: Union
-Information about a pre-opened capability.
-
-Size: 8
-
-Alignment: 4
-
-### Union Layout
-- tag_size: 1
-- tag_align: 1
-- contents_offset: 4
-- contents_size: 4
-- contents_align: 4
-### Union variants
-- <a href="#prestat.dir" name="prestat.dir"></a> `dir`: [`prestat_dir`](#prestat_dir)
-When type is [`preopentype::dir`](#preopentype.dir):
-
 # Modules
-## <a href="#wasi_ephemeral_args" name="wasi_ephemeral_args"></a> wasi_ephemeral_args
-### Imports
-#### Memory
-### Functions
-
----
-
-#### <a href="#get" name="get"></a> `get(argv: Pointer<Pointer<char8>>, argv_buf: Pointer<char8>) -> errno`
-Read command-line argument data.
-The size of the array should match that returned by [`sizes_get`](#sizes_get)
-
-##### Params
-- <a href="#get.argv" name="get.argv"></a> `argv`: `Pointer<Pointer<char8>>`
-
-- <a href="#get.argv_buf" name="get.argv_buf"></a> `argv_buf`: `Pointer<char8>`
-
-##### Results
-- <a href="#get.error" name="get.error"></a> `error`: [`errno`](#errno)
-
-
----
-
-#### <a href="#sizes_get" name="sizes_get"></a> `sizes_get() -> (errno, size, size)`
-Return command-line argument data sizes.
-
-##### Params
-##### Results
-- <a href="#sizes_get.error" name="sizes_get.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#sizes_get.argc" name="sizes_get.argc"></a> `argc`: [`size`](#size)
-The number of arguments.
-
-- <a href="#sizes_get.argv_buf_size" name="sizes_get.argv_buf_size"></a> `argv_buf_size`: [`size`](#size)
-The size of the argument string data.
-
-## <a href="#wasi_ephemeral_clock" name="wasi_ephemeral_clock"></a> wasi_ephemeral_clock
-### Imports
-#### Memory
-### Functions
-
----
-
-#### <a href="#res_get" name="res_get"></a> `res_get(id: clockid) -> (errno, timestamp)`
-Return the resolution of a clock.
-Implementations are required to provide a non-zero value for supported clocks. For unsupported clocks,
-return [`errno::inval`](#errno.inval).
-Note: This is similar to `clock_getres` in POSIX.
-
-##### Params
-- <a href="#res_get.id" name="res_get.id"></a> `id`: [`clockid`](#clockid)
-The clock for which to return the resolution.
-
-##### Results
-- <a href="#res_get.error" name="res_get.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#res_get.resolution" name="res_get.resolution"></a> `resolution`: [`timestamp`](#timestamp)
-The resolution of the clock.
-
-
----
-
-#### <a href="#time_get" name="time_get"></a> `time_get(id: clockid, precision: timestamp) -> (errno, timestamp)`
-Return the time value of a clock.
-Note: This is similar to `clock_gettime` in POSIX.
-
-##### Params
-- <a href="#time_get.id" name="time_get.id"></a> `id`: [`clockid`](#clockid)
-The clock for which to return the time.
-
-- <a href="#time_get.precision" name="time_get.precision"></a> `precision`: [`timestamp`](#timestamp)
-The maximum lag (exclusive) that the returned time value may have, compared to its actual value.
-
-##### Results
-- <a href="#time_get.error" name="time_get.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#time_get.time" name="time_get.time"></a> `time`: [`timestamp`](#timestamp)
-The time value of the clock.
-
-## <a href="#wasi_ephemeral_environ" name="wasi_ephemeral_environ"></a> wasi_ephemeral_environ
-### Imports
-#### Memory
-### Functions
-
----
-
-#### <a href="#get" name="get"></a> `get(environ: Pointer<Pointer<char8>>, environ_buf: Pointer<char8>) -> errno`
-Read environment variable data.
-The sizes of the buffers should match that returned by [`sizes_get`](#sizes_get).
-
-##### Params
-- <a href="#get.environ" name="get.environ"></a> `environ`: `Pointer<Pointer<char8>>`
-
-- <a href="#get.environ_buf" name="get.environ_buf"></a> `environ_buf`: `Pointer<char8>`
-
-##### Results
-- <a href="#get.error" name="get.error"></a> `error`: [`errno`](#errno)
-
-
----
-
-#### <a href="#sizes_get" name="sizes_get"></a> `sizes_get() -> (errno, size, size)`
-Return environment variable data sizes.
-
-##### Params
-##### Results
-- <a href="#sizes_get.error" name="sizes_get.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#sizes_get.environc" name="sizes_get.environc"></a> `environc`: [`size`](#size)
-The number of environment variable arguments.
-
-- <a href="#sizes_get.environ_buf_size" name="sizes_get.environ_buf_size"></a> `environ_buf_size`: [`size`](#size)
-The size of the environment variable data.
-
-## <a href="#wasi_ephemeral_fd" name="wasi_ephemeral_fd"></a> wasi_ephemeral_fd
+## <a href="#wasi_ephemeral_file" name="wasi_ephemeral_file"></a> wasi_ephemeral_file
 ### Imports
 #### Memory
 ### Functions
@@ -1249,97 +809,6 @@ The length of the area that is allocated.
 
 ##### Results
 - <a href="#allocate.error" name="allocate.error"></a> `error`: [`errno`](#errno)
-
-
----
-
-#### <a href="#close" name="close"></a> `close(fd: fd) -> errno`
-Close a file descriptor.
-Note: This is similar to [`close`](#close) in POSIX.
-
-##### Params
-- <a href="#close.fd" name="close.fd"></a> `fd`: [`fd`](#fd)
-
-##### Results
-- <a href="#close.error" name="close.error"></a> `error`: [`errno`](#errno)
-
-
----
-
-#### <a href="#datasync" name="datasync"></a> `datasync(fd: fd) -> errno`
-Synchronize the data of a file to disk.
-Note: This is similar to `fdatasync` in POSIX.
-
-##### Params
-- <a href="#datasync.fd" name="datasync.fd"></a> `fd`: [`fd`](#fd)
-
-##### Results
-- <a href="#datasync.error" name="datasync.error"></a> `error`: [`errno`](#errno)
-
-
----
-
-#### <a href="#fdstat_get" name="fdstat_get"></a> `fdstat_get(fd: fd) -> (errno, fdstat)`
-Get the attributes of a file descriptor.
-Note: This returns similar flags to `fsync(fd, F_GETFL)` in POSIX, as well as additional fields.
-
-##### Params
-- <a href="#fdstat_get.fd" name="fdstat_get.fd"></a> `fd`: [`fd`](#fd)
-
-##### Results
-- <a href="#fdstat_get.error" name="fdstat_get.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#fdstat_get.stat" name="fdstat_get.stat"></a> `stat`: [`fdstat`](#fdstat)
-The buffer where the file descriptor's attributes are stored.
-
-
----
-
-#### <a href="#fdstat_set_flags" name="fdstat_set_flags"></a> `fdstat_set_flags(fd: fd, flags: fdflags) -> errno`
-Adjust the flags associated with a file descriptor.
-Note: This is similar to `fcntl(fd, F_SETFL, flags)` in POSIX.
-
-##### Params
-- <a href="#fdstat_set_flags.fd" name="fdstat_set_flags.fd"></a> `fd`: [`fd`](#fd)
-
-- <a href="#fdstat_set_flags.flags" name="fdstat_set_flags.flags"></a> `flags`: [`fdflags`](#fdflags)
-The desired values of the file descriptor flags.
-
-##### Results
-- <a href="#fdstat_set_flags.error" name="fdstat_set_flags.error"></a> `error`: [`errno`](#errno)
-
-
----
-
-#### <a href="#fdstat_set_rights" name="fdstat_set_rights"></a> `fdstat_set_rights(fd: fd, fs_rights_base: rights, fs_rights_inheriting: rights) -> errno`
-Adjust the rights associated with a file descriptor.
-This can only be used to remove rights, and returns [`errno::notcapable`](#errno.notcapable) if called in a way that would attempt to add rights
-
-##### Params
-- <a href="#fdstat_set_rights.fd" name="fdstat_set_rights.fd"></a> `fd`: [`fd`](#fd)
-
-- <a href="#fdstat_set_rights.fs_rights_base" name="fdstat_set_rights.fs_rights_base"></a> `fs_rights_base`: [`rights`](#rights)
-The desired rights of the file descriptor.
-
-- <a href="#fdstat_set_rights.fs_rights_inheriting" name="fdstat_set_rights.fs_rights_inheriting"></a> `fs_rights_inheriting`: [`rights`](#rights)
-
-##### Results
-- <a href="#fdstat_set_rights.error" name="fdstat_set_rights.error"></a> `error`: [`errno`](#errno)
-
-
----
-
-#### <a href="#filestat_get" name="filestat_get"></a> `filestat_get(fd: fd) -> (errno, filestat)`
-Return the attributes of an open file.
-
-##### Params
-- <a href="#filestat_get.fd" name="filestat_get.fd"></a> `fd`: [`fd`](#fd)
-
-##### Results
-- <a href="#filestat_get.error" name="filestat_get.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#filestat_get.buf" name="filestat_get.buf"></a> `buf`: [`filestat`](#filestat)
-The buffer where the file's attributes are stored.
 
 
 ---
@@ -1430,38 +899,6 @@ The number of bytes read.
 
 ---
 
-#### <a href="#prestat_get" name="prestat_get"></a> `prestat_get(fd: fd) -> (errno, prestat)`
-Return a description of the given preopened file descriptor.
-
-##### Params
-- <a href="#prestat_get.fd" name="prestat_get.fd"></a> `fd`: [`fd`](#fd)
-
-##### Results
-- <a href="#prestat_get.error" name="prestat_get.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#prestat_get.buf" name="prestat_get.buf"></a> `buf`: [`prestat`](#prestat)
-The buffer where the description is stored.
-
-
----
-
-#### <a href="#prestat_dir_name" name="prestat_dir_name"></a> `prestat_dir_name(fd: fd, path: Pointer<char8>, path_len: size) -> errno`
-Return a description of the given preopened file descriptor.
-
-##### Params
-- <a href="#prestat_dir_name.fd" name="prestat_dir_name.fd"></a> `fd`: [`fd`](#fd)
-
-- <a href="#prestat_dir_name.path" name="prestat_dir_name.path"></a> `path`: `Pointer<char8>`
-A buffer into which to write the preopened directory name.
-
-- <a href="#prestat_dir_name.path_len" name="prestat_dir_name.path_len"></a> `path_len`: [`size`](#size)
-
-##### Results
-- <a href="#prestat_dir_name.error" name="prestat_dir_name.error"></a> `error`: [`errno`](#errno)
-
-
----
-
 #### <a href="#pwrite" name="pwrite"></a> `pwrite(fd: fd, iovs: ciovec_array, offset: filesize) -> (errno, size)`
 Write to a file descriptor, without using and updating the file descriptor's offset.
 Note: This is similar to `pwritev` in POSIX.
@@ -1480,78 +917,6 @@ The offset within the file at which to write.
 
 - <a href="#pwrite.nwritten" name="pwrite.nwritten"></a> `nwritten`: [`size`](#size)
 The number of bytes written.
-
-
----
-
-#### <a href="#read" name="read"></a> `read(fd: fd, iovs: iovec_array) -> (errno, size)`
-Read from a file descriptor.
-Note: This is similar to `readv` in POSIX.
-
-##### Params
-- <a href="#read.fd" name="read.fd"></a> `fd`: [`fd`](#fd)
-
-- <a href="#read.iovs" name="read.iovs"></a> `iovs`: [`iovec_array`](#iovec_array)
-List of scatter/gather vectors to which to store data.
-
-##### Results
-- <a href="#read.error" name="read.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#read.nread" name="read.nread"></a> `nread`: [`size`](#size)
-The number of bytes read.
-
-
----
-
-#### <a href="#readdir" name="readdir"></a> `readdir(fd: fd, buf: Pointer<u8>, buf_len: size, cookie: dircookie) -> (errno, size)`
-Read directory entries from a directory.
-When successful, the contents of the output buffer consist of a sequence of
-directory entries. Each directory entry consists of a [`dirent`](#dirent) object,
-followed by [`dirent::d_namlen`](#dirent.d_namlen) bytes holding the name of the directory
-entry.
-This function fills the output buffer as much as possible, potentially
-truncating the last directory entry. This allows the caller to grow its
-read buffer size in case it's too small to fit a single large directory
-entry, or skip the oversized directory entry.
-
-##### Params
-- <a href="#readdir.fd" name="readdir.fd"></a> `fd`: [`fd`](#fd)
-
-- <a href="#readdir.buf" name="readdir.buf"></a> `buf`: `Pointer<u8>`
-The buffer where directory entries are stored
-
-- <a href="#readdir.buf_len" name="readdir.buf_len"></a> `buf_len`: [`size`](#size)
-
-- <a href="#readdir.cookie" name="readdir.cookie"></a> `cookie`: [`dircookie`](#dircookie)
-The location within the directory to start reading
-
-##### Results
-- <a href="#readdir.error" name="readdir.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#readdir.bufused" name="readdir.bufused"></a> `bufused`: [`size`](#size)
-The number of bytes stored in the read buffer. If less than the size of the read buffer, the end of the directory has been reached.
-
-
----
-
-#### <a href="#renumber" name="renumber"></a> `renumber(fd: fd, to: fd) -> errno`
-Atomically replace a file descriptor by renumbering another file descriptor.
-Due to the strong focus on thread safety, this environment does not provide
-a mechanism to duplicate or renumber a file descriptor to an arbitrary
-number, like `dup2()`. This would be prone to race conditions, as an actual
-file descriptor with the same number could be allocated by a different
-thread at the same time.
-This function provides a way to atomically renumber file descriptors, which
-would disappear if `dup2()` were to be removed entirely.
-
-##### Params
-- <a href="#renumber.fd" name="renumber.fd"></a> `fd`: [`fd`](#fd)
-
-- <a href="#renumber.to" name="renumber.to"></a> `to`: [`fd`](#fd)
-The file descriptor to overwrite.
-
-##### Results
-- <a href="#renumber.error" name="renumber.error"></a> `error`: [`errno`](#errno)
 
 
 ---
@@ -1578,19 +943,6 @@ The new offset of the file descriptor, relative to the start of the file.
 
 ---
 
-#### <a href="#sync" name="sync"></a> `sync(fd: fd) -> errno`
-Synchronize the data and metadata of a file to disk.
-Note: This is similar to `fsync` in POSIX.
-
-##### Params
-- <a href="#sync.fd" name="sync.fd"></a> `fd`: [`fd`](#fd)
-
-##### Results
-- <a href="#sync.error" name="sync.error"></a> `error`: [`errno`](#errno)
-
-
----
-
 #### <a href="#tell" name="tell"></a> `tell(fd: fd) -> (errno, filesize)`
 Return the current offset of a file descriptor.
 Note: This is similar to `lseek(fd, 0, SEEK_CUR)` in POSIX.
@@ -1604,26 +956,7 @@ Note: This is similar to `lseek(fd, 0, SEEK_CUR)` in POSIX.
 - <a href="#tell.offset" name="tell.offset"></a> `offset`: [`filesize`](#filesize)
 The current offset of the file descriptor, relative to the start of the file.
 
-
----
-
-#### <a href="#write" name="write"></a> `write(fd: fd, iovs: ciovec_array) -> (errno, size)`
-Write to a file descriptor.
-Note: This is similar to `writev` in POSIX.
-
-##### Params
-- <a href="#write.fd" name="write.fd"></a> `fd`: [`fd`](#fd)
-
-- <a href="#write.iovs" name="write.iovs"></a> `iovs`: [`ciovec_array`](#ciovec_array)
-List of scatter/gather vectors from which to retrieve data.
-
-##### Results
-- <a href="#write.error" name="write.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#write.nwritten" name="write.nwritten"></a> `nwritten`: [`size`](#size)
-The number of bytes written.
-
-## <a href="#wasi_ephemeral_path" name="wasi_ephemeral_path"></a> wasi_ephemeral_path
+## <a href="#wasi_ephemeral_directory" name="wasi_ephemeral_directory"></a> wasi_ephemeral_directory
 ### Imports
 #### Memory
 ### Functions
@@ -1664,66 +997,6 @@ The path of the file or directory to inspect.
 
 - <a href="#filestat_get.buf" name="filestat_get.buf"></a> `buf`: [`filestat`](#filestat)
 The buffer where the file's attributes are stored.
-
-
----
-
-#### <a href="#filestat_set_times" name="filestat_set_times"></a> `filestat_set_times(fd: fd, flags: lookupflags, path: string, atim: timestamp, mtim: timestamp, fst_flags: fstflags) -> errno`
-Adjust the timestamps of a file or directory.
-Note: This is similar to `utimensat` in POSIX.
-
-##### Params
-- <a href="#filestat_set_times.fd" name="filestat_set_times.fd"></a> `fd`: [`fd`](#fd)
-
-- <a href="#filestat_set_times.flags" name="filestat_set_times.flags"></a> `flags`: [`lookupflags`](#lookupflags)
-Flags determining the method of how the path is resolved.
-
-- <a href="#filestat_set_times.path" name="filestat_set_times.path"></a> `path`: `string`
-The path of the file or directory to operate on.
-
-- <a href="#filestat_set_times.atim" name="filestat_set_times.atim"></a> `atim`: [`timestamp`](#timestamp)
-The desired values of the data access timestamp.
-
-- <a href="#filestat_set_times.mtim" name="filestat_set_times.mtim"></a> `mtim`: [`timestamp`](#timestamp)
-The desired values of the data modification timestamp.
-
-- <a href="#filestat_set_times.fst_flags" name="filestat_set_times.fst_flags"></a> `fst_flags`: [`fstflags`](#fstflags)
-A bitmask indicating which timestamps to adjust.
-
-##### Results
-- <a href="#filestat_set_times.error" name="filestat_set_times.error"></a> `error`: [`errno`](#errno)
-
-
----
-
-#### <a href="#permissions_set" name="permissions_set"></a> `permissions_set(fd: fd, flags: lookupflags, path: string, permissions: permissions) -> errno`
-Set the permissions of a file or directory.
-
-This sets the permissions associated with a file or directory in
-a filesystem at the time it is called. The ability to actually access
-a file or directory may depend on additional permissions not reflected
-here.
-
-Note: This is similar to `fchmodat` in POSIX.
-
-Unlike POSIX, this doesn't expose a user/group/other distinction;
-implementations in POSIX environments are suggested to consult the
-umask to determine which of the user/group/other flags to modify.
-
-##### Params
-- <a href="#permissions_set.fd" name="permissions_set.fd"></a> `fd`: [`fd`](#fd)
-
-- <a href="#permissions_set.flags" name="permissions_set.flags"></a> `flags`: [`lookupflags`](#lookupflags)
-Flags determining the method of how the path is resolved.
-
-- <a href="#permissions_set.path" name="permissions_set.path"></a> `path`: `string`
-The path to a file to query.
-
-- <a href="#permissions_set.permissions" name="permissions_set.permissions"></a> `permissions`: [`permissions`](#permissions)
-The permissions to associate with the file.
-
-##### Results
-- <a href="#permissions_set.error" name="permissions_set.error"></a> `error`: [`errno`](#errno)
 
 
 ---
@@ -1796,6 +1069,37 @@ If a file is created, the filesystem permissions to associate with it.
 
 - <a href="#open.opened_fd" name="open.opened_fd"></a> `opened_fd`: [`fd`](#fd)
 The file descriptor of the file that has been opened.
+
+
+---
+
+#### <a href="#readdir" name="readdir"></a> `readdir(fd: fd, buf: Pointer<u8>, buf_len: size, cookie: dircookie) -> (errno, size)`
+Read directory entries from a directory.
+When successful, the contents of the output buffer consist of a sequence of
+directory entries. Each directory entry consists of a `dirent` object,
+followed by `dirent::d_namlen` bytes holding the name of the directory
+entry.
+This function fills the output buffer as much as possible, potentially
+truncating the last directory entry. This allows the caller to grow its
+read buffer size in case it's too small to fit a single large directory
+entry, or skip the oversized directory entry.
+
+##### Params
+- <a href="#readdir.fd" name="readdir.fd"></a> `fd`: [`fd`](#fd)
+
+- <a href="#readdir.buf" name="readdir.buf"></a> `buf`: `Pointer<u8>`
+The buffer where directory entries are stored
+
+- <a href="#readdir.buf_len" name="readdir.buf_len"></a> `buf_len`: [`size`](#size)
+
+- <a href="#readdir.cookie" name="readdir.cookie"></a> `cookie`: [`dircookie`](#dircookie)
+The location within the directory to start reading
+
+##### Results
+- <a href="#readdir.error" name="readdir.error"></a> `error`: [`errno`](#errno)
+
+- <a href="#readdir.bufused" name="readdir.bufused"></a> `bufused`: [`size`](#size)
+The number of bytes stored in the read buffer. If less than the size of the read buffer, the end of the directory has been reached.
 
 
 ---
@@ -1896,154 +1200,145 @@ The path to a file to unlink.
 ##### Results
 - <a href="#unlink_file.error" name="unlink_file.error"></a> `error`: [`errno`](#errno)
 
-## <a href="#wasi_ephemeral_poll" name="wasi_ephemeral_poll"></a> wasi_ephemeral_poll
+## <a href="#wasi_ephemeral_direntry" name="wasi_ephemeral_direntry"></a> wasi_ephemeral_direntry
 ### Imports
 #### Memory
 ### Functions
 
 ---
 
-#### <a href="#oneoff" name="oneoff"></a> `oneoff(in: ConstPointer<subscription>, out: Pointer<event>, nsubscriptions: size) -> (errno, size)`
-Concurrently poll for the occurrence of a set of events.
-
-If `nsubscriptions` is 0, returns [`errno::inval`](#errno.inval).
-
-##### Params
-- <a href="#oneoff.in" name="oneoff.in"></a> `in`: `ConstPointer<subscription>`
-The events to which to subscribe.
-
-- <a href="#oneoff.out" name="oneoff.out"></a> `out`: `Pointer<event>`
-The events that have occurred.
-
-- <a href="#oneoff.nsubscriptions" name="oneoff.nsubscriptions"></a> `nsubscriptions`: [`size`](#size)
-Both the number of subscriptions and events.
-
-##### Results
-- <a href="#oneoff.error" name="oneoff.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#oneoff.nevents" name="oneoff.nevents"></a> `nevents`: [`size`](#size)
-The number of events stored.
-
-## <a href="#wasi_ephemeral_proc" name="wasi_ephemeral_proc"></a> wasi_ephemeral_proc
-### Imports
-### Functions
-
----
-
-#### <a href="#exit" name="exit"></a> `exit(rval: exitcode)`
-Terminate the process normally. An exit code of 0 indicates successful
-termination of the program. The meanings of other values is dependent on
-the environment.
+#### <a href="#datasync" name="datasync"></a> `datasync(fd: fd) -> errno`
+Synchronize the data of a direntry to disk.
+Note: This is similar to `fdatasync` in POSIX.
 
 ##### Params
-- <a href="#exit.rval" name="exit.rval"></a> `rval`: [`exitcode`](#exitcode)
-The exit code returned by the process.
+- <a href="#datasync.fd" name="datasync.fd"></a> `fd`: [`fd`](#fd)
 
 ##### Results
-## <a href="#wasi_ephemeral_random" name="wasi_ephemeral_random"></a> wasi_ephemeral_random
-### Imports
-#### Memory
-### Functions
-
----
-
-#### <a href="#get" name="get"></a> `get(buf: Pointer<u8>, buf_len: size) -> errno`
-Write high-quality random data into a buffer.
-This function blocks when the implementation is unable to immediately
-provide sufficient high-quality random data.
-This function may execute slowly, so when large mounts of random data are
-required, it's advisable to use this function to seed a pseudo-random
-number generator, rather than to provide the random data directly.
-
-##### Params
-- <a href="#get.buf" name="get.buf"></a> `buf`: `Pointer<u8>`
-The buffer to fill with random data.
-
-- <a href="#get.buf_len" name="get.buf_len"></a> `buf_len`: [`size`](#size)
-
-##### Results
-- <a href="#get.error" name="get.error"></a> `error`: [`errno`](#errno)
-
-## <a href="#wasi_ephemeral_sched" name="wasi_ephemeral_sched"></a> wasi_ephemeral_sched
-### Imports
-### Functions
-
----
-
-#### <a href="#yield" name="yield"></a> `yield() -> errno`
-Temporarily yield execution of the calling thread.
-Note: This is similar to [`yield`](#yield) in POSIX.
-
-##### Params
-##### Results
-- <a href="#yield.error" name="yield.error"></a> `error`: [`errno`](#errno)
-
-## <a href="#wasi_ephemeral_sock" name="wasi_ephemeral_sock"></a> wasi_ephemeral_sock
-### Imports
-#### Memory
-### Functions
-
----
-
-#### <a href="#recv" name="recv"></a> `recv(fd: fd, ri_data: iovec_array, ri_flags: riflags) -> (errno, size, roflags)`
-Receive a message from a socket.
-Note: This is similar to [`recv`](#recv) in POSIX, though it also supports reading
-the data into multiple buffers in the manner of `readv`.
-
-##### Params
-- <a href="#recv.fd" name="recv.fd"></a> `fd`: [`fd`](#fd)
-
-- <a href="#recv.ri_data" name="recv.ri_data"></a> `ri_data`: [`iovec_array`](#iovec_array)
-List of scatter/gather vectors to which to store data.
-
-- <a href="#recv.ri_flags" name="recv.ri_flags"></a> `ri_flags`: [`riflags`](#riflags)
-Message flags.
-
-##### Results
-- <a href="#recv.error" name="recv.error"></a> `error`: [`errno`](#errno)
-
-- <a href="#recv.ro_datalen" name="recv.ro_datalen"></a> `ro_datalen`: [`size`](#size)
-Number of bytes stored in ri_data.
-
-- <a href="#recv.ro_flags" name="recv.ro_flags"></a> `ro_flags`: [`roflags`](#roflags)
-Message flags.
+- <a href="#datasync.error" name="datasync.error"></a> `error`: [`errno`](#errno)
 
 
 ---
 
-#### <a href="#send" name="send"></a> `send(fd: fd, si_data: ciovec_array, si_flags: siflags) -> (errno, size)`
-Send a message on a socket.
-Note: This is similar to [`send`](#send) in POSIX, though it also supports writing
-the data from multiple buffers in the manner of `writev`.
+#### <a href="#fdstat_get" name="fdstat_get"></a> `fdstat_get(fd: fd) -> (errno, fdstat)`
+Get the attributes of a file descriptor.
+Note: This returns similar flags to `fsync(fd, F_GETFL)` in POSIX, as well as additional fields.
 
 ##### Params
-- <a href="#send.fd" name="send.fd"></a> `fd`: [`fd`](#fd)
-
-- <a href="#send.si_data" name="send.si_data"></a> `si_data`: [`ciovec_array`](#ciovec_array)
-List of scatter/gather vectors to which to retrieve data
-
-- <a href="#send.si_flags" name="send.si_flags"></a> `si_flags`: [`siflags`](#siflags)
-Message flags.
+- <a href="#fdstat_get.fd" name="fdstat_get.fd"></a> `fd`: [`fd`](#fd)
 
 ##### Results
-- <a href="#send.error" name="send.error"></a> `error`: [`errno`](#errno)
+- <a href="#fdstat_get.error" name="fdstat_get.error"></a> `error`: [`errno`](#errno)
 
-- <a href="#send.so_datalen" name="send.so_datalen"></a> `so_datalen`: [`size`](#size)
-Number of bytes transmitted.
+- <a href="#fdstat_get.stat" name="fdstat_get.stat"></a> `stat`: [`fdstat`](#fdstat)
+The buffer where the file descriptor's attributes are stored.
 
 
 ---
 
-#### <a href="#shutdown" name="shutdown"></a> `shutdown(fd: fd, how: sdflags) -> errno`
-Shut down socket send and receive channels.
-Note: This is similar to [`shutdown`](#shutdown) in POSIX.
+#### <a href="#fdstat_set_flags" name="fdstat_set_flags"></a> `fdstat_set_flags(fd: fd, flags: fdflags) -> errno`
+Adjust the flags associated with a file descriptor.
+Note: This is similar to `fcntl(fd, F_SETFL, flags)` in POSIX.
 
 ##### Params
-- <a href="#shutdown.fd" name="shutdown.fd"></a> `fd`: [`fd`](#fd)
+- <a href="#fdstat_set_flags.fd" name="fdstat_set_flags.fd"></a> `fd`: [`fd`](#fd)
 
-- <a href="#shutdown.how" name="shutdown.how"></a> `how`: [`sdflags`](#sdflags)
-Which channels on the socket to shut down.
+- <a href="#fdstat_set_flags.flags" name="fdstat_set_flags.flags"></a> `flags`: [`fdflags`](#fdflags)
+The desired values of the file descriptor flags.
 
 ##### Results
-- <a href="#shutdown.error" name="shutdown.error"></a> `error`: [`errno`](#errno)
+- <a href="#fdstat_set_flags.error" name="fdstat_set_flags.error"></a> `error`: [`errno`](#errno)
+
+
+---
+
+#### <a href="#fdstat_set_rights" name="fdstat_set_rights"></a> `fdstat_set_rights(fd: fd, fs_rights_base: rights, fs_rights_inheriting: rights) -> errno`
+Adjust the rights associated with a direntry.
+This can only be used to remove rights, and returns [`errno::notcapable`](#errno.notcapable) if called in a way that would attempt to add rights
+
+##### Params
+- <a href="#fdstat_set_rights.fd" name="fdstat_set_rights.fd"></a> `fd`: [`fd`](#fd)
+
+- <a href="#fdstat_set_rights.fs_rights_base" name="fdstat_set_rights.fs_rights_base"></a> `fs_rights_base`: [`rights`](#rights)
+The desired rights of the file descriptor.
+
+- <a href="#fdstat_set_rights.fs_rights_inheriting" name="fdstat_set_rights.fs_rights_inheriting"></a> `fs_rights_inheriting`: [`rights`](#rights)
+
+##### Results
+- <a href="#fdstat_set_rights.error" name="fdstat_set_rights.error"></a> `error`: [`errno`](#errno)
+
+
+---
+
+#### <a href="#filestat_get" name="filestat_get"></a> `filestat_get(fd: fd) -> (errno, filestat)`
+Return the attributes of a direntry.
+
+##### Params
+- <a href="#filestat_get.fd" name="filestat_get.fd"></a> `fd`: [`fd`](#fd)
+
+##### Results
+- <a href="#filestat_get.error" name="filestat_get.error"></a> `error`: [`errno`](#errno)
+
+- <a href="#filestat_get.buf" name="filestat_get.buf"></a> `buf`: [`filestat`](#filestat)
+The buffer where the direntry's attributes are stored.
+
+
+---
+
+#### <a href="#filestat_set_times" name="filestat_set_times"></a> `filestat_set_times(fd: fd, atim: timestamp, mtim: timestamp, fst_flags: fstflags) -> errno`
+Adjust the timestamps of an open direntry.
+Note: This is similar to `futimens` in POSIX.
+
+##### Params
+- <a href="#filestat_set_times.fd" name="filestat_set_times.fd"></a> `fd`: [`fd`](#fd)
+
+- <a href="#filestat_set_times.atim" name="filestat_set_times.atim"></a> `atim`: [`timestamp`](#timestamp)
+The desired values of the data access timestamp.
+
+- <a href="#filestat_set_times.mtim" name="filestat_set_times.mtim"></a> `mtim`: [`timestamp`](#timestamp)
+The desired values of the data modification timestamp.
+
+- <a href="#filestat_set_times.fst_flags" name="filestat_set_times.fst_flags"></a> `fst_flags`: [`fstflags`](#fstflags)
+A bitmask indicating which timestamps to adjust.
+
+##### Results
+- <a href="#filestat_set_times.error" name="filestat_set_times.error"></a> `error`: [`errno`](#errno)
+
+
+---
+
+#### <a href="#permissions_set" name="permissions_set"></a> `permissions_set(fd: fd, permissions: permissions) -> errno`
+Set the permissions of a direntry.
+
+This sets the permissions associated with a direntry in
+a filesystem at the time it is called. The ability to actually access
+a direntry may depend on additional permissions not reflected here.
+
+Note: This is similar `fchmod` in POSIX.
+
+Unlike POSIX, this doesn't expose a user/group/other distinction;
+implementations in POSIX environments are suggested to consult the
+umask to determine which of the user/group/other flags to modify.
+
+##### Params
+- <a href="#permissions_set.fd" name="permissions_set.fd"></a> `fd`: [`fd`](#fd)
+
+- <a href="#permissions_set.permissions" name="permissions_set.permissions"></a> `permissions`: [`permissions`](#permissions)
+The permissions associated with the direntry.
+
+##### Results
+- <a href="#permissions_set.error" name="permissions_set.error"></a> `error`: [`errno`](#errno)
+
+
+---
+
+#### <a href="#sync" name="sync"></a> `sync(fd: fd) -> errno`
+Synchronize the data and metadata of a direntry to disk.
+Note: This is similar to `fsync` in POSIX.
+
+##### Params
+- <a href="#sync.fd" name="sync.fd"></a> `fd`: [`fd`](#fd)
+
+##### Results
+- <a href="#sync.error" name="sync.error"></a> `error`: [`errno`](#errno)
 
