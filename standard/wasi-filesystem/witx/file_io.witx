@@ -25,6 +25,9 @@
   )
 
   ;;; Force the allocation of space in a file.
+  ;;;
+  ;;; This requires a file descriptor with `access_mode::write` set.
+  ;;;
   ;;; Note: This is similar to `posix_fallocate` in POSIX.
   (@interface func (export "allocate")
     (param $fd $fd)
@@ -59,16 +62,6 @@
     (result $error (expected (error $errno)))
   )
 
-  ;;; Adjust the rights associated with a file descriptor.
-  ;;; This can only be used to remove rights, and returns `errno::notcapable` if called in a way that would attempt to add rights
-  (@interface func (export "fdstat_set_rights")
-    (param $fd $fd)
-    ;;; The desired rights of the file descriptor.
-    (param $fs_rights_base $rights)
-    (param $fs_rights_inheriting $rights)
-    (result $error (expected (error $errno)))
-  )
-
   ;;; Return the attributes of an open file.
   (@interface func (export "filestat_get")
     (param $fd $fd)
@@ -77,6 +70,9 @@
   )
 
   ;;; Adjust the size of an open file. If this increases the file's size, the extra bytes are filled with zeros.
+  ;;;
+  ;;; This requires a file descriptor with `access_mode::write` set.
+  ;;;
   ;;; Note: This is similar to `ftruncate` in POSIX.
   (@interface func (export "filestat_set_size")
     (param $fd $fd)
@@ -86,6 +82,9 @@
   )
 
   ;;; Adjust the timestamps of an open file or directory.
+  ;;;
+  ;;; This requires a file descriptor with `access_mode::write` set.
+  ;;;
   ;;; Note: This is similar to `futimens` in POSIX.
   (@interface func (export "filestat_set_times")
     (param $fd $fd)
@@ -118,6 +117,9 @@
   )
 
   ;;; Read from a file descriptor, without using and updating the file descriptor's offset.
+  ;;;
+  ;;; This requires a file descriptor with `access_mode::read` set.
+  ;;;
   ;;; Note: This is similar to `preadv` in Linux (and other Unix-es).
   (@interface func (export "pread")
     (param $fd $fd)
@@ -130,6 +132,9 @@
   )
 
   ;;; Write to a file descriptor, without using and updating the file descriptor's offset.
+  ;;;
+  ;;; This requires a file descriptor with `access_mode::write` set.
+  ;;;
   ;;; Note: This is similar to `pwritev` in Linux (and other Unix-es).
   ;;;
   ;;; Like Linux (and other Unix-es), any calls of `pwrite` (and other
@@ -146,6 +151,9 @@
   )
 
   ;;; Read from a file descriptor.
+  ;;;
+  ;;; This requires a file descriptor with `access_mode::read` set.
+  ;;;
   ;;; Note: This is similar to `readv` in POSIX.
   (@interface func (export "read")
     (param $fd $fd)
@@ -221,6 +229,9 @@
   )
 
   ;;; Write to a file descriptor.
+  ;;;
+  ;;; This requires a file descriptor with `access_mode::write` set.
+  ;;;
   ;;; Note: This is similar to `writev` in POSIX.
   ;;;
   ;;; Like POSIX, any calls of `write` (and other functions to read or write)

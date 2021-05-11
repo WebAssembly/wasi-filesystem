@@ -193,91 +193,18 @@
   )
 )
 
-;;; File descriptor rights, determining which actions may be performed.
-(typename $rights
-  (flags (@witx repr u64)
-    ;;; The right to invoke `fd_datasync`.
-    ;;
-    ;;; If `path_open` is set, includes the right to invoke
-    ;;; `path_open` with `fdflags::dsync`.
-    $fd_datasync
-    ;;; The right to invoke `fd_read` and `sock_recv`.
-    ;;
-    ;;; If `rights::fd_seek` is set, includes the right to invoke `fd_pread`.
-    $fd_read
-    ;;; The right to invoke `fd_seek`. This flag implies `rights::fd_tell`.
-    $fd_seek
-    ;;; The right to invoke `fd_fdstat_set_flags`.
-    $fd_fdstat_set_flags
-    ;;; The right to invoke `fd_sync`.
-    ;;
-    ;;; If `path_open` is set, includes the right to invoke
-    ;;; `path_open` with `fdflags::rsync` and `fdflags::dsync`.
-    $fd_sync
-    ;;; The right to invoke `fd_seek` in such a way that the file offset
-    ;;; remains unaltered (i.e., `whence::cur` with offset zero), or to
-    ;;; invoke `fd_tell`.
-    $fd_tell
-    ;;; The right to invoke `fd_write` and `sock_send`.
-    ;;; If `rights::fd_seek` is set, includes the right to invoke `fd_pwrite`.
-    $fd_write
-    ;;; The right to invoke `fd_advise`.
-    $fd_advise
-    ;;; The right to invoke `fd_allocate`.
-    $fd_allocate
-    ;;; The right to invoke `path_create_directory`.
-    $path_create_directory
-    ;;; If `path_open` is set, the right to invoke `path_open` with `oflags::create`.
-    $path_create_file
-    ;;; The right to invoke `path_link` with the file descriptor as the
-    ;;; source directory.
-    $path_link_source
-    ;;; The right to invoke `path_link` with the file descriptor as the
-    ;;; target directory.
-    $path_link_target
-    ;;; The right to invoke `path_open`.
-    $path_open
-    ;;; The right to invoke `fd_readdir`.
-    $fd_readdir
-    ;;; The right to invoke `path_readlink`.
-    $path_readlink
-    ;;; The right to invoke `path_rename` with the file descriptor as the source directory.
-    $path_rename_source
-    ;;; The right to invoke `path_rename` with the file descriptor as the target directory.
-    $path_rename_target
-    ;;; The right to invoke `path_filestat_get`.
-    $path_filestat_get
-    ;;; The right to change a file's size.
-    ;;; If `path_open` is set, includes the right to invoke `path_open` with `oflags::trunc`.
-    ;;; Note: there is no function named `path_filestat_set_size`. This follows POSIX design,
-    ;;; which only has `ftruncate` and does not provide `ftruncateat`.
-    ;;; While such function would be desirable from the API design perspective, there are virtually
-    ;;; no use cases for it since no code written for POSIX systems would use it.
-    ;;; Moreover, implementing it would require multiple syscalls, leading to inferior performance.
-    $path_filestat_set_size
-    ;;; The right to invoke `path_filestat_set_times`.
-    $path_filestat_set_times
-    ;;; The right to invoke `path_permissions_set`.
-    $path_permissions_set
-    ;;; The right to invoke `fd_filestat_get`.
-    $fd_filestat_get
-    ;;; The right to invoke `fd_filestat_set_size`.
-    $fd_filestat_set_size
-    ;;; The right to invoke `fd_filestat_set_times`.
-    $fd_filestat_set_times
-    ;;; The right to invoke `fd_permissions_set`.
-    $fd_permissions_set
-    ;;; The right to invoke `path_symlink`.
-    $path_symlink
-    ;;; The right to invoke `path_remove_directory`.
-    $path_remove_directory
-    ;;; The right to invoke `path_unlink_file`.
-    $path_unlink_file
-    ;;; If `rights::fd_read` is set, includes the right to invoke `poll_oneoff` to subscribe to `eventtype::fd_read`.
-    ;;; If `rights::fd_write` is set, includes the right to invoke `poll_oneoff` to subscribe to `eventtype::fd_write`.
-    $poll_fd_readwrite
-    ;;; The right to invoke `sock_shutdown`.
-    $sock_shutdown
+;;; Access mode for an open file descriptor handle.
+;;;
+;;; This describes whether a file descriptor may be used for reading,
+;;; writing, or both.
+;;;
+;;; This applies to sequences of bytes, and not directory entries.
+(typename $access_mode
+  (flags (@witx repr u8)
+    ;;; Reading (`read`, `pread`)
+    $read
+    ;;; Writing (`write`, `pwrite`, `filestat_set_size`, etc.).
+    $write
   )
 )
 
@@ -415,11 +342,8 @@
     (field $fs_filetype $filetype)
     ;;; File descriptor flags.
     (field $fs_flags $fdflags)
-    ;;; Rights that apply to this file descriptor.
-    (field $fs_rights_base $rights)
-    ;;; Maximum set of rights that may be installed on new file descriptors that
-    ;;; are created through this file descriptor, e.g., through `path_open`.
-    (field $fs_rights_inheriting $rights)
+    ;;; Access mode for this file descriptor.
+    (field $fs_access_mode $access_mode)
   )
 )
 

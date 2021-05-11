@@ -105,16 +105,8 @@
     (param $path string)
     ;;; The method by which to open the file.
     (param $oflags $oflags)
-    ;;; The initial rights of the newly created file descriptor. The
-    ;;; implementation is allowed to return a file descriptor with fewer rights
-    ;;; than specified, if and only if those rights do not apply to the type of
-    ;;; file being opened.
-    ;;
-    ;;; The *base* rights are rights that will apply to operations using the file
-    ;;; descriptor itself, while the *inheriting* rights are rights that apply to
-    ;;; file descriptors derived from it.
-    (param $fs_rights_base $rights)
-    (param $fs_rights_inheriting $rights)
+    ;;; The access mode (read, write, or both) for which to open the file.
+    (param $fs_access_mode $access_mode)
     (param $fdflags $fdflags)
     ;;; If a file is created, the filesystem permissions to associate with it.
     (param $permissions $permissions)
