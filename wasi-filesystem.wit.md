@@ -47,7 +47,7 @@ type timestamp = u64
 /// Note: This was called `fdstat` in earlier versions of WASI.
 record info {
     /// The type of filesystem object referenced by a descriptor.
-    "type": "type",
+    type: type,
     /// Flags associated with a descriptor.
     "flags": "flags",
 }
@@ -58,7 +58,7 @@ record info {
 /// The type of a filesystem object referenced by a descriptor.
 ///
 /// Note: This was called `filetype` in earlier versions of WASI.
-enum "type" {
+enum type {
     /// The type of the descriptor or file is unknown or is different from
     /// any of the other types specified.
     unknown,
@@ -117,7 +117,7 @@ record stat {
     /// File serial number.
     ino: inode,
     /// File type.
-    "type": "type",
+    type: type,
     /// Number of hard links to the file.
     nlink: linkcount,
     /// For regular files, the file size in bytes. For symbolic links, the length
@@ -214,7 +214,7 @@ record dirent {
     /// The length of the name of the directory entry.
     namelen: size,
     /// The type of the file referred to by this directory entry.
-    "type": "type",
+    type: type,
 }
 ```
 
