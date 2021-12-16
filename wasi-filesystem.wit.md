@@ -132,10 +132,10 @@ record stat {
 }
 ```
 
-## `atflags`
+## `rflags`
 ```wit
 /// Flags determining the method of how paths are resolved.
-flags atflags {
+flags rflags {
     /// As long as the resolved path corresponds to a symbolic link, it is expanded.
     symlink_follow,
 }
@@ -623,7 +623,7 @@ create_directory_at: function(
 /// Note: This was called `fd_filestat_get` in earlier versions of WASI.
 stat_at: function(
     /// Flags determining the method of how the path is resolved.
-    atflags: atflags,
+    rflags: rflags,
     /// The relative path of the file or directory to inspect.
     path: string,
 ) -> (
@@ -641,7 +641,7 @@ stat_at: function(
 /// Note: This was called `path_filestat_set_times` in earlier versions of WASI.
 set_times_at: function(
     /// Flags determining the method of how the path is resolved.
-    atflags: atflags,
+    rflags: rflags,
     /// The relative path of the file or directory to operate on.
     path: string,
     /// The desired values of the data access timestamp.
@@ -658,7 +658,7 @@ set_times_at: function(
 /// Note: This is similar to `linkat` in POSIX.
 link_at: function(
     /// Flags determining the method of how the path is resolved.
-    old_atflags: atflags,
+    old_rflags: rflags,
     /// The relative source path from which to link.
     old_path: string,
     /// The base directory for `new_path`.
@@ -681,7 +681,7 @@ link_at: function(
 /// Note: This is similar to `openat` in POSIX.
 open_at: function(
     /// Flags determining the method of how the path is resolved.
-    atflags: atflags,
+    rflags: rflags,
     /// The relative path of the object to open.
     path: string,
     /// The method by which to open the file.
@@ -773,7 +773,7 @@ unlink_file_at: function(
 ```wit
 change_file_permissions_at: function(
     /// Flags determining the method of how the path is resolved.
-    atflags: atflags,
+    rflags: rflags,
     /// The relative path to operate on.
     path: string,
     /// The new permissions for the filesystem object.
@@ -795,7 +795,7 @@ change_file_permissions_at: function(
 ```wit
 change_directory_permissions_at: function(
     /// Flags determining the method of how the path is resolved.
-    atflags: atflags,
+    rflags: rflags,
     /// The relative path to operate on.
     path: string,
     /// The new permissions for the directory.
