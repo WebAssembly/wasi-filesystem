@@ -49,7 +49,7 @@ record info {
     /// The type of filesystem object referenced by a descriptor.
     "type": "type",
     /// Flags associated with a descriptor.
-    "flags": "flags",
+    flags: flags,
 }
 ```
 
@@ -84,7 +84,7 @@ enum "type" {
 /// Descriptor flags.
 ///
 /// Note: This was called `fdflags` in earlier versions of WASI.
-flags "flags" {
+flags flags {
     /// Read mode: Data can be read.
     read,
     /// Write mode: Data can be written to.
@@ -687,7 +687,7 @@ open_at: function(
     /// The method by which to open the file.
     oflags: oflags,
     /// Flags to use for the resulting descriptor.
-    fdflags: "flags",
+    flags: flags,
     /// Permissions to use when creating a new file.
     mode: mode
 ) -> (
