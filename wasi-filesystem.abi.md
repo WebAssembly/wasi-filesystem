@@ -798,7 +798,7 @@ Size: 16, Alignment: 8
 - <a href="#descriptor_pwrite.offset" name="descriptor_pwrite.offset"></a> `offset`: [`filesize`](#filesize)
 ##### Result
 
-- expected<`unit`, [`errno`](#errno)>
+- future<expected<`unit`, [`errno`](#errno)>>
 
 ----
 
@@ -901,7 +901,7 @@ Size: 16, Alignment: 8
 - <a href="#descriptor_write.buf" name="descriptor_write.buf"></a> `buf`: stream<`u8`, `unit`>
 ##### Result
 
-- expected<`unit`, [`errno`](#errno)>
+- future<expected<`unit`, [`errno`](#errno)>>
 
 ----
 
