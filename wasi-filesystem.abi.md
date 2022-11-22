@@ -657,8 +657,8 @@ Size: 16, Alignment: 8
 ##### Params
 
 - <a href="#descriptor_fadvise.self" name="descriptor_fadvise.self"></a> `self`: handle<descriptor>
-- <a href="#descriptor_fadvise.offset" name="descriptor_fadvise.offset"></a> `offset`: `u64`
-- <a href="#descriptor_fadvise.len" name="descriptor_fadvise.len"></a> `len`: `u64`
+- <a href="#descriptor_fadvise.offset" name="descriptor_fadvise.offset"></a> `offset`: [`filesize`](#filesize)
+- <a href="#descriptor_fadvise.len" name="descriptor_fadvise.len"></a> `len`: [`size`](#size)
 - <a href="#descriptor_fadvise.advice" name="descriptor_fadvise.advice"></a> `advice`: [`advice`](#advice)
 ##### Results
 
@@ -680,7 +680,7 @@ Size: 16, Alignment: 8
 
 ----
 
-#### <a href="#descriptor_info" name="descriptor_info"></a> `descriptor::info` 
+#### <a href="#descriptor_fd_info" name="descriptor_fd_info"></a> `descriptor::fd-info` 
 
   Get information associated with a descriptor.
   
@@ -690,7 +690,7 @@ Size: 16, Alignment: 8
   Note: This was called `fdstat_get` in earlier versions of WASI.
 ##### Params
 
-- <a href="#descriptor_info.self" name="descriptor_info.self"></a> `self`: handle<descriptor>
+- <a href="#descriptor_fd_info.self" name="descriptor_fd_info.self"></a> `self`: handle<descriptor>
 ##### Results
 
 - result<[`info`](#info), [`errno`](#errno)>

@@ -413,15 +413,15 @@ resource descriptor {
 /// This is similar to `posix_fadvise` in POSIX.
 fadvise: func(
     /// The offset within the file to which the advisory applies.
-    offset: u64,
+    offset: filesize,
     /// The length of the region to which the advisory applies.
-    len: u64,
+    len: size,
     /// The advice.
     advice: advice
 ) -> result<_, errno>
 ```
 
-## `fdatasync`
+## `datasync`
 ```wit
 /// Synchronize the data of a file to disk.
 ///
@@ -429,7 +429,7 @@ fadvise: func(
 datasync: func() -> result<_, errno>
 ```
 
-## `info`
+## `fd-info`
 ```wit
 /// Get information associated with a descriptor.
 ///
@@ -437,7 +437,7 @@ datasync: func() -> result<_, errno>
 /// as additional fields.
 ///
 /// Note: This was called `fdstat_get` in earlier versions of WASI.
-info: func() -> result<info, errno>
+fd-info: func() -> result<info, errno>
 ```
 
 ## `set-size`
