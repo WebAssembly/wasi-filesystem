@@ -1054,3 +1054,105 @@ Size: 16, Alignment: 8
 
 - result<_, [`errno`](#errno)>
 
+----
+
+#### <a href="#descriptor_lock_shared" name="descriptor_lock_shared"></a> `descriptor::lock-shared` 
+
+  Request a shared advisory lock for an open file.
+  
+  This requests a *shared* lock; more than one shared lock can be held for
+  a file at the same time.
+  
+  This requests an *advisory* lock, meaning that the file could be accessed
+  by other programs that don't hold the lock.
+  
+  This function blocks until the lock can be acquired.
+  
+  Note: This is similar to `flock(fd, LOCK_SH)` in Unix.
+##### Params
+
+- <a href="#descriptor_lock_shared.self" name="descriptor_lock_shared.self"></a> `self`: handle<descriptor>
+##### Results
+
+- result<_, [`errno`](#errno)>
+
+----
+
+#### <a href="#descriptor_lock_exclusive" name="descriptor_lock_exclusive"></a> `descriptor::lock-exclusive` 
+
+  Request an exclusive advisory lock for an open file.
+  
+  This requests an *exclusive* lock; no other locks may be held for the
+  file while an exclusive lock is held.
+  
+  This requests an *advisory* lock, meaning that the file could be accessed
+  by other programs that don't hold the lock.
+  
+  This function blocks until the lock can be acquired.
+  
+  Note: This is similar to `flock(fd, LOCK_EX)` in Unix.
+##### Params
+
+- <a href="#descriptor_lock_exclusive.self" name="descriptor_lock_exclusive.self"></a> `self`: handle<descriptor>
+##### Results
+
+- result<_, [`errno`](#errno)>
+
+----
+
+#### <a href="#descriptor_try_lock_shared" name="descriptor_try_lock_shared"></a> `descriptor::try-lock-shared` 
+
+  Request a shared advisory lock for an open file.
+  
+  This requests a *shared* lock; more than one shared lock can be held for
+  a file at the same time.
+  
+  This requests an *advisory* lock, meaning that the file could be accessed
+  by other programs that don't hold the lock.
+  
+  This function returns `errno::wouldblock` if the lock cannot be acquired.
+  
+  Note: This is similar to `flock(fd, LOCK_SH | LOCK_NB)` in Unix.
+##### Params
+
+- <a href="#descriptor_try_lock_shared.self" name="descriptor_try_lock_shared.self"></a> `self`: handle<descriptor>
+##### Results
+
+- result<_, [`errno`](#errno)>
+
+----
+
+#### <a href="#descriptor_try_lock_exclusive" name="descriptor_try_lock_exclusive"></a> `descriptor::try-lock-exclusive` 
+
+  Request an exclusive advisory lock for an open file.
+  
+  This requests an *exclusive* lock; no other locks may be held for the
+  file while an exclusive lock is held.
+  
+  This requests an *advisory* lock, meaning that the file could be accessed
+  by other programs that don't hold the lock.
+  
+  This function returns `errno::wouldblock` if the lock cannot be acquired.
+  
+  Note: This is similar to `flock(fd, LOCK_EX | LOCK_NB)` in Unix.
+##### Params
+
+- <a href="#descriptor_try_lock_exclusive.self" name="descriptor_try_lock_exclusive.self"></a> `self`: handle<descriptor>
+##### Results
+
+- result<_, [`errno`](#errno)>
+
+----
+
+#### <a href="#descriptor_unlock" name="descriptor_unlock"></a> `descriptor::unlock` 
+
+  Release a shared or exclusive lock on an open file.
+  
+  Note: This is similar to `flock(fd, LOCK_UN)` in Unix.
+##### Params
+
+- <a href="#descriptor_unlock.self" name="descriptor_unlock.self"></a> `self`: handle<descriptor>
+##### Results
+
+- result<_, [`errno`](#errno)>
+
