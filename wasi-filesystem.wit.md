@@ -740,6 +740,9 @@ change-directory-permissions-at: func(
 /// This requests a *shared* lock; more than one shared lock can be held for
 /// a file at the same time.
 ///
+/// If the open file has an exclusive lock, this function downgrades the lock
+/// to a shared lock. If it has a shared lock, this function has no effect.
+///
 /// This requests an *advisory* lock, meaning that the file could be accessed
 /// by other programs that don't hold the lock.
 ///
@@ -755,6 +758,10 @@ lock-shared: func() -> result<_, errno>
 ///
 /// This requests an *exclusive* lock; no other locks may be held for the
 /// file while an exclusive lock is held.
+///
+/// If the open file has a shared lock and there are no exclusive locks held
+/// for the fhile, this function upgrades the lock to an exclusive lock. If the
+/// open file already has an exclusive lock, this function has no effect.
 ///
 /// This requests an *advisory* lock, meaning that the file could be accessed
 /// by other programs that don't hold the lock.
@@ -772,6 +779,9 @@ lock-exclusive: func() -> result<_, errno>
 /// This requests a *shared* lock; more than one shared lock can be held for
 /// a file at the same time.
 ///
+/// If the open file has an exclusive lock, this function downgrades the lock
+/// to a shared lock. If it has a shared lock, this function has no effect.
+///
 /// This requests an *advisory* lock, meaning that the file could be accessed
 /// by other programs that don't hold the lock.
 ///
@@ -787,6 +797,10 @@ try-lock-shared: func() -> result<_, errno>
 ///
 /// This requests an *exclusive* lock; no other locks may be held for the
 /// file while an exclusive lock is held.
+///
+/// If the open file has a shared lock and there are no exclusive locks held
+/// for the fhile, this function upgrades the lock to an exclusive lock. If the
+/// open file already has an exclusive lock, this function has no effect.
 ///
 /// This requests an *advisory* lock, meaning that the file could be accessed
 /// by other programs that don't hold the lock.
