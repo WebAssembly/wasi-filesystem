@@ -26,7 +26,7 @@ Size: 8, Alignment: 8
 
 Size: 8, Alignment: 8
 
-## <a href="#info" name="info"></a> `info`: record
+## <a href="#fd_info" name="fd_info"></a> `fd-info`: record
 
   Information associated with a descriptor.
   
@@ -36,11 +36,11 @@ Size: 2, Alignment: 1
 
 ### Record Fields
 
-- <a href="info.type" name="info.type"></a> [`type`](#info.type): [`type`](#type)
+- <a href="fd_info.type" name="fd_info.type"></a> [`type`](#fd_info.type): [`type`](#type)
 
   The type of filesystem object referenced by a descriptor.
 
-- <a href="info.flags" name="info.flags"></a> [`flags`](#info.flags): [`flags`](#flags)
+- <a href="fd_info.flags" name="fd_info.flags"></a> [`flags`](#fd_info.flags): [`flags`](#flags)
 
   Flags associated with a descriptor.
 
@@ -680,7 +680,7 @@ Size: 16, Alignment: 8
 
 ----
 
-#### <a href="#descriptor_fd_info" name="descriptor_fd_info"></a> `descriptor::fd-info` 
+#### <a href="#descriptor_info" name="descriptor_info"></a> `descriptor::info` 
 
   Get information associated with a descriptor.
   
@@ -690,10 +690,10 @@ Size: 16, Alignment: 8
   Note: This was called `fdstat_get` in earlier versions of WASI.
 ##### Params
 
-- <a href="#descriptor_fd_info.self" name="descriptor_fd_info.self"></a> `self`: handle<descriptor>
+- <a href="#descriptor_info.self" name="descriptor_info.self"></a> `self`: handle<descriptor>
 ##### Results
 
-- result<[`info`](#info), [`errno`](#errno)>
+- result<[`fd-info`](#fd_info), [`errno`](#errno)>
 
 ----
 

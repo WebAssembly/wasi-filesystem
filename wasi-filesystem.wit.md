@@ -40,12 +40,12 @@ type filedelta = s64
 type timestamp = u64
 ```
 
-## `info`
+## `fd-info`
 ```wit
 /// Information associated with a descriptor.
 ///
 /// Note: This was called `fdstat` in earlier versions of WASI.
-record info {
+record fd-info {
     /// The type of filesystem object referenced by a descriptor.
     %type: %type,
     /// Flags associated with a descriptor.
@@ -429,7 +429,7 @@ fadvise: func(
 datasync: func() -> result<_, errno>
 ```
 
-## `fd-info`
+## `info`
 ```wit
 /// Get information associated with a descriptor.
 ///
@@ -437,7 +437,7 @@ datasync: func() -> result<_, errno>
 /// as additional fields.
 ///
 /// Note: This was called `fdstat_get` in earlier versions of WASI.
-fd-info: func() -> result<info, errno>
+info: func() -> result<fd-info, errno>
 ```
 
 ## `set-size`
