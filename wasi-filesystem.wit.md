@@ -746,6 +746,9 @@ change-directory-permissions-at: func(
 /// This requests an *advisory* lock, meaning that the file could be accessed
 /// by other programs that don't hold the lock.
 ///
+/// It is unspecified how shared locks interact with locks acquired by
+/// non-WASI programs.
+///
 /// This function blocks until the lock can be acquired.
 ///
 /// Note: This is similar to `flock(fd, LOCK_SH)` in Unix.
@@ -766,6 +769,10 @@ lock-shared: func() -> result<_, errno>
 /// This requests an *advisory* lock, meaning that the file could be accessed
 /// by other programs that don't hold the lock.
 ///
+/// It is unspecified whether this function succeeds if the file descriptor
+/// is not opened for writing. It is unspecified how exclusive locks interact
+/// with locks acquired by non-WASI programs.
+///
 /// This function blocks until the lock can be acquired.
 ///
 /// Note: This is similar to `flock(fd, LOCK_EX)` in Unix.
@@ -784,6 +791,9 @@ lock-exclusive: func() -> result<_, errno>
 ///
 /// This requests an *advisory* lock, meaning that the file could be accessed
 /// by other programs that don't hold the lock.
+///
+/// It is unspecified how shared locks interact with locks acquired by
+/// non-WASI programs.
 ///
 /// This function returns `errno::wouldblock` if the lock cannot be acquired.
 ///
@@ -804,6 +814,10 @@ try-lock-shared: func() -> result<_, errno>
 ///
 /// This requests an *advisory* lock, meaning that the file could be accessed
 /// by other programs that don't hold the lock.
+///
+/// It is unspecified whether this function succeeds if the file descriptor
+/// is not opened for writing. It is unspecified how exclusive locks interact
+/// with locks acquired by non-WASI programs.
 ///
 /// This function returns `errno::wouldblock` if the lock cannot be acquired.
 ///
