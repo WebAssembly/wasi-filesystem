@@ -751,6 +751,9 @@ change-directory-permissions-at: func(
 ///
 /// This function blocks until the lock can be acquired.
 ///
+/// Not all filesystems support locking; on filesystems which don't support
+/// locking, this function returns `errno::notsup`.
+///
 /// Note: This is similar to `flock(fd, LOCK_SH)` in Unix.
 lock-shared: func() -> result<_, errno>
 ```
@@ -775,6 +778,9 @@ lock-shared: func() -> result<_, errno>
 ///
 /// This function blocks until the lock can be acquired.
 ///
+/// Not all filesystems support locking; on filesystems which don't support
+/// locking, this function returns `errno::notsup`.
+///
 /// Note: This is similar to `flock(fd, LOCK_EX)` in Unix.
 lock-exclusive: func() -> result<_, errno>
 ```
@@ -796,6 +802,9 @@ lock-exclusive: func() -> result<_, errno>
 /// non-WASI programs.
 ///
 /// This function returns `errno::wouldblock` if the lock cannot be acquired.
+///
+/// Not all filesystems support locking; on filesystems which don't support
+/// locking, this function returns `errno::notsup`.
 ///
 /// Note: This is similar to `flock(fd, LOCK_SH | LOCK_NB)` in Unix.
 try-lock-shared: func() -> result<_, errno>
@@ -820,6 +829,9 @@ try-lock-shared: func() -> result<_, errno>
 /// with locks acquired by non-WASI programs.
 ///
 /// This function returns `errno::wouldblock` if the lock cannot be acquired.
+///
+/// Not all filesystems support locking; on filesystems which don't support
+/// locking, this function returns `errno::notsup`.
 ///
 /// Note: This is similar to `flock(fd, LOCK_EX | LOCK_NB)` in Unix.
 try-lock-exclusive: func() -> result<_, errno>
