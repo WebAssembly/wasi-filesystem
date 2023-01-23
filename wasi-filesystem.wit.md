@@ -359,6 +359,9 @@ fadvise: func(
 /// Synchronize the data of a file to disk.
 ///
 /// Note: This is similar to `fdatasync` in POSIX.
+///
+/// This function succeeds with no effect if the file descriptor is not
+/// opened for writing.
 datasync: func() -> result<_, errno>
 ```
 
@@ -487,6 +490,9 @@ seek: func(
 /// Synchronize the data and metadata of a file to disk.
 ///
 /// Note: This is similar to `fsync` in POSIX.
+///
+/// This function succeeds with no effect if the file descriptor is not
+/// opened for writing.
 sync: func() -> result<_, errno>
 ```
 

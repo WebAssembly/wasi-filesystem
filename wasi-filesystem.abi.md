@@ -545,6 +545,9 @@ Size: 16, Alignment: 8
   Synchronize the data of a file to disk.
   
   Note: This is similar to `fdatasync` in POSIX.
+  
+  This function succeeds with no effect if the file descriptor is not
+  opened for writing.
 ##### Params
 
 - <a href="#descriptor_datasync.self" name="descriptor_datasync.self"></a> `self`: handle<descriptor>
@@ -724,6 +727,9 @@ Size: 16, Alignment: 8
   Synchronize the data and metadata of a file to disk.
   
   Note: This is similar to `fsync` in POSIX.
+  
+  This function succeeds with no effect if the file descriptor is not
+  opened for writing.
 ##### Params
 
 - <a href="#descriptor_sync.self" name="descriptor_sync.self"></a> `self`: handle<descriptor>
