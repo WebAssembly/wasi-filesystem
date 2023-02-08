@@ -15,6 +15,12 @@
 default interface wasi-filesystem {
 ```
 
+# Imports
+```wit
+use pkg.wasi-io.{input-stream, output-stream}
+use pkg.wasi-wall-clock.{datetime}
+```
+
 ## `filesize`
 ```wit
 /// File size or length of a region within a file.
@@ -89,11 +95,11 @@ record descriptor-stat {
     /// in bytes of the pathname contained in the symbolic link.
     size: filesize,
     /// Last data access timestamp.
-    atim: u64,
+    atim: datetime,
     /// Last data modification timestamp.
-    mtim: u64,
+    mtim: datetime,
     /// Last file status change timestamp.
-    ctim: u64,
+    ctim: datetime,
 }
 ```
 
@@ -167,7 +173,7 @@ variant new-timestamp {
     /// with the filesystem.
     now,
     /// Set the timestamp to the given value.
-    timestamp(u64),
+    timestamp(datetime),
 }
 ```
 
@@ -303,6 +309,43 @@ enum advice {
 /// calls may be made.
 // TODO(resource descriptor {)
 type descriptor = u32
+```
+
+## `read-via-stream`
+```wit
+/// Return a stream for reading from a file.
+///
+/// Note: This allows using `read-stream`, which is similar to `read` in POSIX.
+read-via-stream: func(
+    this: descriptor,
+    /// The offset within the file at which to start reading.
+    offset: filesize,
+) -> result<input-stream, errno>
+```
+
+## `write-via-stream`
+```wit
+/// Return a stream for writing to a file.
+///
+/// Note: This allows using `write-stream`, which is similar to `write` in POSIX.
+write-via-stream: func(
+    this: descriptor,
+    /// The offset within the file at which to start writing.
+    offset: filesize,
+) -> result<output-stream, errno>
+```
+
+## `append-via-stream`
+```wit
+/// Return a stream for appending to a file.
+///
+/// Note: This allows using `write-stream`, which is similar to `write` with
+/// `O_APPEND` in in POSIX.
+append-via-stream: func(
+    this: descriptor,
+    /// The resource to operate on.
+    fd: descriptor,
+) -> result<output-stream, errno>
 ```
 
 ## `fadvise`
