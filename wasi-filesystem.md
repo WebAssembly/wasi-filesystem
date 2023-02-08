@@ -1034,7 +1034,7 @@ directory.
 - <a href="#readdir.this" name="readdir.this"></a> `this`: [`descriptor`](#descriptor)
 ##### Results
 
-- <a href="#readdir.result0" name="readdir.result0"></a> `result0`: stream<[`dir-entry-stream`](#dir_entry_stream), [`errno`](#errno)>
+- <a href="#readdir.result0" name="readdir.result0"></a> `result0`: result<[`dir-entry-stream`](#dir_entry_stream), [`errno`](#errno)>
 
 ----
 

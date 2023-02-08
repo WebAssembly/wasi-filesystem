@@ -473,7 +473,7 @@ pwrite: func(
 ///
 /// This always returns a new stream which starts at the beginning of the
 /// directory.
-readdir: func(this: descriptor) -> stream<dir-entry-stream, errno>
+readdir: func(this: descriptor) -> result<dir-entry-stream, errno>
 ```
 
 ## `sync`
