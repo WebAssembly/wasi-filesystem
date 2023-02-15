@@ -885,6 +885,9 @@ Size: 1, Alignment: 1
 
 Return a stream for reading from a file.
 
+Multiple read, write, and append streams may be active on the same open
+file and they do not interfere with each other.
+
 Note: This allows using `read-stream`, which is similar to `read` in POSIX.
 ##### Params
 
@@ -920,7 +923,6 @@ Note: This allows using `write-stream`, which is similar to `write` with
 ##### Params
 
 - <a href="#append_via_stream.this" name="append_via_stream.this"></a> `this`: [`descriptor`](#descriptor)
-- <a href="#append_via_stream.fd" name="append_via_stream.fd"></a> `fd`: [`descriptor`](#descriptor)
 ##### Results
 
 - <a href="#append_via_stream.result0" name="append_via_stream.result0"></a> `result0`: result<[`output-stream`](#output_stream), [`errno`](#errno)>
@@ -1003,7 +1005,7 @@ from `fdstat_get` in earlier versions of WASI.
 
 Set status flags associated with a descriptor.
 
-This function may only change the `append` and `nonblock` flags.
+This function may only change the `nonblock` flag.
 
 Note: This is similar to `fcntl(fd, F_SETFL, flags)` in POSIX.
 
@@ -1103,7 +1105,8 @@ and their parents, often named `.` and `..` respectively, these entries
 are omitted.
 
 This always returns a new stream which starts at the beginning of the
-directory.
+directory. Multiple streams may be active on the same directory, and they
+do not interfere with each other.
 ##### Params
 
 - <a href="#readdir.this" name="readdir.this"></a> `this`: [`descriptor`](#descriptor)
@@ -1231,8 +1234,8 @@ If `flags` contains `descriptor-flags::mutate-directory`, and the base
 descriptor doesn't have `descriptor-flags::mutate-directory` set,
 `open-at` fails with `errno::rofs`.
 
-If `flags` contains `write` or `append`, or `o-flags` contains `trunc`
-or `create`, and the base descriptor doesn't have
+If `flags` contains `write` or `mutate-directory`, or `o-flags` contains
+`trunc` or `create`, and the base descriptor doesn't have
 `descriptor-flags::mutate-directory` set, `open-at` fails with
 `errno::rofs`.
 
@@ -1254,6 +1257,9 @@ Note: This is similar to `openat` in POSIX.
 #### <a href="#readlink_at" name="readlink_at"></a> `readlink-at` 
 
 Read the contents of a symbolic link.
+
+If the contents contain an absolute or rooted path in the underlying
+filesystem, this function fails with `errno::perm`.
 
 Note: This is similar to `readlinkat` in POSIX.
 ##### Params
@@ -1302,7 +1308,7 @@ Note: This is similar to `renameat` in POSIX.
 
 #### <a href="#symlink_at" name="symlink_at"></a> `symlink-at` 
 
-Create a symbolic link.
+Create a symbolic link (also known as a "symlink").
 
 Note: This is similar to `symlinkat` in POSIX.
 ##### Params

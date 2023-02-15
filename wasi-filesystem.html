@@ -743,6 +743,8 @@ Bit: 0</p>
 <hr />
 <h4><a href="#read_via_stream" name="read_via_stream"></a> <a href="#read_via_stream"><code>read-via-stream</code></a></h4>
 <p>Return a stream for reading from a file.</p>
+<p>Multiple read, write, and append streams may be active on the same open
+file and they do not interfere with each other.</p>
 <p>Note: This allows using <code>read-stream</code>, which is similar to <a href="#read"><code>read</code></a> in POSIX.</p>
 <h5>Params</h5>
 <ul>
@@ -774,7 +776,6 @@ Bit: 0</p>
 <h5>Params</h5>
 <ul>
 <li><a href="#append_via_stream.this" name="append_via_stream.this"></a> <code>this</code>: <a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a></li>
-<li><a href="#append_via_stream.fd" name="append_via_stream.fd"></a> <code>fd</code>: <a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a></li>
 </ul>
 <h5>Results</h5>
 <ul>
@@ -843,7 +844,7 @@ from <code>fdstat_get</code> in earlier versions of WASI.</p>
 <hr />
 <h4><a href="#set_flags" name="set_flags"></a> <a href="#set_flags"><code>set-flags</code></a></h4>
 <p>Set status flags associated with a descriptor.</p>
-<p>This function may only change the <code>append</code> and <code>nonblock</code> flags.</p>
+<p>This function may only change the <code>nonblock</code> flag.</p>
 <p>Note: This is similar to <code>fcntl(fd, F_SETFL, flags)</code> in POSIX.</p>
 <p>Note: This was called <code>fd_fdstat_set_flags</code> in earlier versions of WASI.</p>
 <h5>Params</h5>
@@ -927,7 +928,8 @@ the write set to zero.</p>
 and their parents, often named <code>.</code> and <code>..</code> respectively, these entries
 are omitted.</p>
 <p>This always returns a new stream which starts at the beginning of the
-directory.</p>
+directory. Multiple streams may be active on the same directory, and they
+do not interfere with each other.</p>
 <h5>Params</h5>
 <ul>
 <li><a href="#readdir.this" name="readdir.this"></a> <code>this</code>: <a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a></li>
@@ -1035,8 +1037,8 @@ guaranteed to be less than 2**31.</p>
 <p>If <a href="#flags"><code>flags</code></a> contains <a href="#descriptor_flags.mutate_directory"><code>descriptor-flags::mutate-directory</code></a>, and the base
 descriptor doesn't have <a href="#descriptor_flags.mutate_directory"><code>descriptor-flags::mutate-directory</code></a> set,
 <a href="#open_at"><code>open-at</code></a> fails with <a href="#errno.rofs"><code>errno::rofs</code></a>.</p>
-<p>If <a href="#flags"><code>flags</code></a> contains <a href="#write"><code>write</code></a> or <code>append</code>, or <a href="#o_flags"><code>o-flags</code></a> contains <code>trunc</code>
-or <code>create</code>, and the base descriptor doesn't have
+<p>If <a href="#flags"><code>flags</code></a> contains <a href="#write"><code>write</code></a> or <code>mutate-directory</code>, or <a href="#o_flags"><code>o-flags</code></a> contains
+<code>trunc</code> or <code>create</code>, and the base descriptor doesn't have
 <a href="#descriptor_flags.mutate_directory"><code>descriptor-flags::mutate-directory</code></a> set, <a href="#open_at"><code>open-at</code></a> fails with
 <a href="#errno.rofs"><code>errno::rofs</code></a>.</p>
 <p>Note: This is similar to <code>openat</code> in POSIX.</p>
@@ -1056,6 +1058,8 @@ or <code>create</code>, and the base descriptor doesn't have
 <hr />
 <h4><a href="#readlink_at" name="readlink_at"></a> <a href="#readlink_at"><code>readlink-at</code></a></h4>
 <p>Read the contents of a symbolic link.</p>
+<p>If the contents contain an absolute or rooted path in the underlying
+filesystem, this function fails with <a href="#errno.perm"><code>errno::perm</code></a>.</p>
 <p>Note: This is similar to <code>readlinkat</code> in POSIX.</p>
 <h5>Params</h5>
 <ul>
@@ -1097,7 +1101,7 @@ or <code>create</code>, and the base descriptor doesn't have
 </ul>
 <hr />
 <h4><a href="#symlink_at" name="symlink_at"></a> <a href="#symlink_at"><code>symlink-at</code></a></h4>
-<p>Create a symbolic link.</p>
+<p>Create a symbolic link (also known as a &quot;symlink&quot;).</p>
 <p>Note: This is similar to <code>symlinkat</code> in POSIX.</p>
 <h5>Params</h5>
 <ul>
