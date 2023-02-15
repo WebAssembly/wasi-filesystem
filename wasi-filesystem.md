@@ -1310,6 +1310,8 @@ Note: This is similar to `renameat` in POSIX.
 
 Create a symbolic link (also known as a "symlink").
 
+If `old-path` starts with `/`, the function fails with `errno::perm`.
+
 Note: This is similar to `symlinkat` in POSIX.
 ##### Params
 

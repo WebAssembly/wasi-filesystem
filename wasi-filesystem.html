@@ -1102,6 +1102,7 @@ filesystem, this function fails with <a href="#errno.perm"><code>errno::perm</co
 <hr />
 <h4><a href="#symlink_at" name="symlink_at"></a> <a href="#symlink_at"><code>symlink-at</code></a></h4>
 <p>Create a symbolic link (also known as a &quot;symlink&quot;).</p>
+<p>If <code>old-path</code> starts with <code>/</code>, the function fails with <a href="#errno.perm"><code>errno::perm</code></a>.</p>
 <p>Note: This is similar to <code>symlinkat</code> in POSIX.</p>
 <h5>Params</h5>
 <ul>
