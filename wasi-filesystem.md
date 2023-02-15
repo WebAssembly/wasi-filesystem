@@ -39,9 +39,9 @@ Poll for completion on a set of pollables.
 The "oneoff" in the name refers to the fact that this function must do a
 linear scan through the entire list of subscriptions, which may be
 inefficient if the number is large and the same subscriptions are used
-many times. In the future, it may be accompanied by an API similar to
-Linux's `epoll` which allows sets of subscriptions to be registered and
-made efficiently reusable.
+many times. In the future, this is expected to be obsoleted by the
+component model async proposal, which will include a scalable waiting
+facility.
 
 Note that the return type would ideally be `list<bool>`, but that would
 be more difficult to polyfill given the current state of `wit-bindgen`.
@@ -157,16 +157,16 @@ value will be at most `len`; it may be less.
 
 ----
 
-#### <a href="#subscribe_read" name="subscribe_read"></a> `subscribe-read` 
+#### <a href="#subscribe_to_input_stream" name="subscribe_to_input_stream"></a> `subscribe-to-input-stream` 
 
 Create a `pollable` which will resolve once either the specified stream has bytes
 available to read or the other end of the stream has been closed.
 ##### Params
 
-- <a href="#subscribe_read.this" name="subscribe_read.this"></a> `this`: [`input-stream`](#input_stream)
+- <a href="#subscribe_to_input_stream.this" name="subscribe_to_input_stream.this"></a> `this`: [`input-stream`](#input_stream)
 ##### Results
 
-- <a href="#subscribe_read.result0" name="subscribe_read.result0"></a> `result0`: [`pollable`](#pollable)
+- <a href="#subscribe_to_input_stream.result0" name="subscribe_to_input_stream.result0"></a> `result0`: [`pollable`](#pollable)
 
 ----
 
@@ -248,16 +248,16 @@ This function returns the number of bytes transferred.
 
 ----
 
-#### <a href="#subscribe" name="subscribe"></a> `subscribe` 
+#### <a href="#subscribe_to_output_stream" name="subscribe_to_output_stream"></a> `subscribe-to-output-stream` 
 
 Create a `pollable` which will resolve once either the specified stream is ready
 to accept bytes or the other end of the stream has been closed.
 ##### Params
 
-- <a href="#subscribe.this" name="subscribe.this"></a> `this`: [`output-stream`](#output_stream)
+- <a href="#subscribe_to_output_stream.this" name="subscribe_to_output_stream.this"></a> `this`: [`output-stream`](#output_stream)
 ##### Results
 
-- <a href="#subscribe.result0" name="subscribe.result0"></a> `result0`: [`pollable`](#pollable)
+- <a href="#subscribe_to_output_stream.result0" name="subscribe_to_output_stream.result0"></a> `result0`: [`pollable`](#pollable)
 
 ----
 
