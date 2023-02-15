@@ -471,6 +471,11 @@ set-times: func(
 ```wit
 /// Read from a descriptor, without using and updating the descriptor's offset.
 ///
+/// This function returns a list of bytes containing the data that was
+/// read, along with a bool indicating whether the end of the file
+/// was reached. The returned list will contain up to `len` bytes; it
+/// may return fewer than requested, but not more.
+///
 /// Note: This is similar to `pread` in POSIX.
 // TODO(stream<u8, errno>)
 pread: func(
@@ -479,7 +484,7 @@ pread: func(
     len: filesize,
     /// The offset within the file at which to read.
     offset: filesize,
-) -> result<list<u8>, errno>
+) -> result<tuple<list<u8>, bool>, errno>
 ```
 
 ## `pwrite`
