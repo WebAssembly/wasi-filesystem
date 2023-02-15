@@ -118,7 +118,7 @@ flags descriptor-flags {
 ## `descriptor-stat`
 ```wit
 /// File attributes.
-/// 
+///
 /// Note: This was called `filestat` in earlier versions of WASI.
 record descriptor-stat {
     /// Device ID of device containing the file.
