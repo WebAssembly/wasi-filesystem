@@ -385,7 +385,7 @@ advise: func(
     /// The offset within the file to which the advisory applies.
     offset: filesize,
     /// The length of the region to which the advisory applies.
-    len: filesize,
+    length: filesize,
     /// The advice.
     advice: advice
 ) -> result<_, error-code>
@@ -471,7 +471,7 @@ set-times: func(
 ///
 /// This function returns a list of bytes containing the data that was
 /// read, along with a bool which, when true, indicates that the end of the
-/// file was reached. The returned list will contain up to `len` bytes; it
+/// file was reached. The returned list will contain up to `length` bytes; it
 /// may return fewer than requested, if the end of the file is reached or
 /// if the I/O operation is interrupted.
 ///
@@ -480,7 +480,7 @@ set-times: func(
 read: func(
     this: descriptor,
     /// The maximum number of bytes to read.
-    len: filesize,
+    length: filesize,
     /// The offset within the file at which to read.
     offset: filesize,
 ) -> result<tuple<list<u8>, bool>, errno>
@@ -499,7 +499,7 @@ read: func(
 write: func(
     this: descriptor,
     /// Data to write
-    buf: list<u8>,
+    buffer: list<u8>,
     /// The offset within the file at which to write.
     offset: filesize,
 ) -> result<filesize, error-code>
