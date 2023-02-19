@@ -20,7 +20,7 @@
 /// function starts with `/`, or if any step of resolving a `path`, including
 /// `..` and symbolic link steps, reaches a directory outside of the base
 /// directory, or reaches a symlink to an absolute or rooted path in the
-/// underlying filesystem, the function fails with `errno::perm`.
+/// underlying filesystem, the function fails with `error-code::not-permitted`.
 default interface wasi-filesystem {
 ```
 
@@ -261,7 +261,7 @@ enum error-code {
     /// File too large.
     file-too-large,
     /// Illegal byte sequence.
-    Illegal-byte-sequence,
+    illegal-byte-sequence,
     /// Operation in progress.
     in-progress,
     /// Interrupted function.
@@ -495,7 +495,7 @@ read: func(
     length: filesize,
     /// The offset within the file at which to read.
     offset: filesize,
-) -> result<tuple<list<u8>, bool>, errno>
+) -> result<tuple<list<u8>, bool>, error-code>
 ```
 
 ## `write`
@@ -658,7 +658,7 @@ open-at: func(
 /// Read the contents of a symbolic link.
 ///
 /// If the contents contain an absolute or rooted path in the underlying
-/// filesystem, this function fails with `errno::perm`.
+/// filesystem, this function fails with `error-code::not-permitted`.
 ///
 /// Note: This is similar to `readlinkat` in POSIX.
 readlink-at: func(
@@ -702,7 +702,7 @@ rename-at: func(
 ```wit
 /// Create a symbolic link (also known as a "symlink").
 ///
-/// If `old-path` starts with `/`, the function fails with `errno::perm`.
+/// If `old-path` starts with `/`, the function fails with `error-code::not-permitted`.
 ///
 /// Note: This is similar to `symlinkat` in POSIX.
 symlink-at: func(
