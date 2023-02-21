@@ -321,19 +321,19 @@ expanded.
 <ul>
 <li>
 <p><a name="open_flags.create"><code>create</code></a>: </p>
-<p>Create file if it does not exist.
+<p>Create file if it does not exist, similar to `O_CREAT` in POSIX.
 </li>
 <li>
 <p><a name="open_flags.directory"><code>directory</code></a>: </p>
-<p>Fail if not a directory.
+<p>Fail if not a directory, similar to `O_DIRECTORY` in POSIX.
 </li>
 <li>
 <p><a name="open_flags.exclusive"><code>exclusive</code></a>: </p>
-<p>Fail if file already exists.
+<p>Fail if file already exists, similar to `O_EXCL` in POSIX.
 </li>
 <li>
 <p><a name="open_flags.truncate"><code>truncate</code></a>: </p>
-<p>Truncate file to size 0.
+<p>Truncate file to size 0, similar to `O_TRUNC` in POSIX.
 </li>
 </ul>
 <h4><a name="modes"><code>flags modes</code></a></h4>
@@ -367,7 +367,7 @@ filesystem. This does not apply to directories.
 <p><code>u64</code></p>
 <p>File size or length of a region within a file.
 <h4><a name="error_code"><code>enum error-code</code></a></h4>
-<p>Error codes returned by functions.
+<p>Error codes returned by functions, similar to <code>errno</code> in POSIX.
 Not all of these error codes are returned by the functions provided by this
 API; some are used in higher-level library layers, and others are provided
 merely for alignment with POSIX.</p>
@@ -375,151 +375,151 @@ merely for alignment with POSIX.</p>
 <ul>
 <li>
 <p><a name="error_code.access"><code>access</code></a></p>
-<p>Permission denied.
+<p>Permission denied, similar to `EACCES` in POSIX.
 </li>
 <li>
 <p><a name="error_code.would_block"><code>would-block</code></a></p>
-<p>Resource unavailable, or operation would block.
+<p>Resource unavailable, or operation would block, similar to `EAGAIN` and `EWOULDBLOCK` in POSIX.
 </li>
 <li>
 <p><a name="error_code.already"><code>already</code></a></p>
-<p>Connection already in progress.
+<p>Connection already in progress, similar to `EALREADY` in POSIX.
 </li>
 <li>
 <p><a name="error_code.bad_descriptor"><code>bad-descriptor</code></a></p>
-<p>Bad descriptor.
+<p>Bad descriptor, similar to `EBADF` in POSIX.
 </li>
 <li>
 <p><a name="error_code.busy"><code>busy</code></a></p>
-<p>Device or resource busy.
+<p>Device or resource busy, similar to `EBUSY` in POSIX.
 </li>
 <li>
 <p><a name="error_code.deadlock"><code>deadlock</code></a></p>
-<p>Resource deadlock would occur.
+<p>Resource deadlock would occur, similar to `EDEADLK` in POSIX.
 </li>
 <li>
 <p><a name="error_code.quota"><code>quota</code></a></p>
-<p>Storage quota exceeded.
+<p>Storage quota exceeded, similar to `EDQUOT` in POSIX.
 </li>
 <li>
 <p><a name="error_code.exist"><code>exist</code></a></p>
-<p>File exists.
+<p>File exists, similar to `EEXIST` in POSIX.
 </li>
 <li>
 <p><a name="error_code.file_too_large"><code>file-too-large</code></a></p>
-<p>File too large.
+<p>File too large, similar to `EFBIG` in POSIX.
 </li>
 <li>
 <p><a name="error_code.illegal_byte_sequence"><code>illegal-byte-sequence</code></a></p>
-<p>Illegal byte sequence.
+<p>Illegal byte sequence, similar to `EILSEQ` in POSIX.
 </li>
 <li>
 <p><a name="error_code.in_progress"><code>in-progress</code></a></p>
-<p>Operation in progress.
+<p>Operation in progress, similar to `EINPROGRESS` in POSIX.
 </li>
 <li>
 <p><a name="error_code.interrupted"><code>interrupted</code></a></p>
-<p>Interrupted function.
+<p>Interrupted function, similar to `EINTR` in POSIX.
 </li>
 <li>
 <p><a name="error_code.invalid"><code>invalid</code></a></p>
-<p>Invalid argument.
+<p>Invalid argument, similar to `EINVAL` in POSIX.
 </li>
 <li>
 <p><a name="error_code.io"><code>io</code></a></p>
-<p>I/O error.
+<p>I/O error, similar to `EIO` in POSIX.
 </li>
 <li>
 <p><a name="error_code.is_directory"><code>is-directory</code></a></p>
-<p>Is a directory.
+<p>Is a directory, similar to `EISDIR` in POSIX.
 </li>
 <li>
 <p><a name="error_code.loop"><code>loop</code></a></p>
-<p>Too many levels of symbolic links.
+<p>Too many levels of symbolic links, similar to `ELOOP` in POSIX.
 </li>
 <li>
 <p><a name="error_code.too_many_links"><code>too-many-links</code></a></p>
-<p>Too many links.
+<p>Too many links, similar to `EMLINK` in POSIX.
 </li>
 <li>
 <p><a name="error_code.message_size"><code>message-size</code></a></p>
-<p>Message too large.
+<p>Message too large, similar to `EMSGSIZE` in POSIX.
 </li>
 <li>
 <p><a name="error_code.name_too_long"><code>name-too-long</code></a></p>
-<p>Filename too long.
+<p>Filename too long, similar to `ENAMETOOLONG` in POSIX.
 </li>
 <li>
 <p><a name="error_code.no_device"><code>no-device</code></a></p>
-<p>No such device.
+<p>No such device, similar to `ENODEV` in POSIX.
 </li>
 <li>
 <p><a name="error_code.no_entry"><code>no-entry</code></a></p>
-<p>No such file or directory.
+<p>No such file or directory, similar to `ENOENT` in POSIX.
 </li>
 <li>
 <p><a name="error_code.no_lock"><code>no-lock</code></a></p>
-<p>No locks available.
+<p>No locks available, similar to `ENOLCK` in POSIX.
 </li>
 <li>
 <p><a name="error_code.insufficient_memory"><code>insufficient-memory</code></a></p>
-<p>Not enough space.
+<p>Not enough space, similar to `ENOMEM` in POSIX.
 </li>
 <li>
 <p><a name="error_code.insufficient_space"><code>insufficient-space</code></a></p>
-<p>No space left on device.
+<p>No space left on device, similar to `ENOSPC` in POSIX.
 </li>
 <li>
 <p><a name="error_code.not_directory"><code>not-directory</code></a></p>
-<p>Not a directory or a symbolic link to a directory.
+<p>Not a directory or a symbolic link to a directory, similar to `ENOTDIR` in POSIX.
 </li>
 <li>
 <p><a name="error_code.not_empty"><code>not-empty</code></a></p>
-<p>Directory not empty.
+<p>Directory not empty, similar to `ENOTEMPTY` in POSIX.
 </li>
 <li>
 <p><a name="error_code.not_recoverable"><code>not-recoverable</code></a></p>
-<p>State not recoverable.
+<p>State not recoverable, similar to `ENOTRECOVERABLE` in POSIX.
 </li>
 <li>
 <p><a name="error_code.unsupported"><code>unsupported</code></a></p>
-<p>Not supported
+<p>Not supported, similar to `ENOTSUP` and `ENOSYS` in POSIX.
 </li>
 <li>
 <p><a name="error_code.no_tty"><code>no-tty</code></a></p>
-<p>Inappropriate I/O control operation.
+<p>Inappropriate I/O control operation, similar to `ENOTTY` in POSIX.
 </li>
 <li>
 <p><a name="error_code.no_such_device"><code>no-such-device</code></a></p>
-<p>No such device or address.
+<p>No such device or address, similar to `ENXIO` in POSIX.
 </li>
 <li>
 <p><a name="error_code.overflow"><code>overflow</code></a></p>
-<p>Value too large to be stored in data type.
+<p>Value too large to be stored in data type, similar to `EOVERFLOW` in POSIX.
 </li>
 <li>
 <p><a name="error_code.not_permitted"><code>not-permitted</code></a></p>
-<p>Operation not permitted.
+<p>Operation not permitted, similar to `EPERM` in POSIX.
 </li>
 <li>
 <p><a name="error_code.pipe"><code>pipe</code></a></p>
-<p>Broken pipe.
+<p>Broken pipe, similar to `EPIPE` in POSIX.
 </li>
 <li>
 <p><a name="error_code.read_only"><code>read-only</code></a></p>
-<p>Read-only file system.
+<p>Read-only file system, similar to `EROFS` in POSIX.
 </li>
 <li>
 <p><a name="error_code.invalid_seek"><code>invalid-seek</code></a></p>
-<p>Invalid seek.
+<p>Invalid seek, similar to `ESPIPE` in POSIX.
 </li>
 <li>
 <p><a name="error_code.text_file_busy"><code>text-file-busy</code></a></p>
-<p>Text file busy.
+<p>Text file busy, similar to `ETXTBSY` in POSIX.
 </li>
 <li>
 <p><a name="error_code.cross_device"><code>cross-device</code></a></p>
-<p>Cross-device link.
+<p>Cross-device link, similar to `EXDEV` in POSIX.
 </li>
 </ul>
 <h4><a name="directory_entry_stream"><code>type directory-entry-stream</code></a></h4>
@@ -611,13 +611,13 @@ implementations which can set this to a non-none value should do so.</p>
 <a href="#error_code.would_block"><code>error-code::would-block</code></a> error code in situations where they would
 otherwise block. However, this non-blocking behavior is not
 required. Implementations are permitted to ignore this flag and
-block.</p>
+block. This is similar to <code>O_NONBLOCK</code> in POSIX.</p>
 </li>
 <li>
 <p><a name="descriptor_flags.file_integrity_sync"><code>file-integrity-sync</code></a>: </p>
 <p>Request that writes be performed according to synchronized I/O file
 integrity completion. The data stored in the file and the file's
-metadata are synchronized.
+metadata are synchronized. This is similar to `O_SYNC` in POSIX.
 <p>The precise semantics of this operation have not yet been defined for
 WASI. At this time, it should be interpreted as a request, and not a
 requirement.</p>
@@ -626,7 +626,7 @@ requirement.</p>
 <p><a name="descriptor_flags.data_integrity_sync"><code>data-integrity-sync</code></a>: </p>
 <p>Request that writes be performed according to synchronized I/O data
 integrity completion. Only the data stored in the file is
-synchronized.
+synchronized. This is similar to `O_DSYNC` in POSIX.
 <p>The precise semantics of this operation have not yet been defined for
 WASI. At this time, it should be interpreted as a request, and not a
 requirement.</p>
@@ -634,7 +634,7 @@ requirement.</p>
 <li>
 <p><a name="descriptor_flags.requested_write_sync"><code>requested-write-sync</code></a>: </p>
 <p>Requests that reads be performed at the same level of integrety
-requested for writes.
+requested for writes. This is similar to `O_RSYNC` in POSIX.
 <p>The precise semantics of this operation have not yet been defined for
 WASI. At this time, it should be interpreted as a request, and not a
 requirement.</p>
