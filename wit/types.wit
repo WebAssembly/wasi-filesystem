@@ -292,6 +292,15 @@ interface types {
     /// This [represents a resource](https://github.com/WebAssembly/WASI/blob/main/docs/WitInWasi.md#Resources).
     type descriptor = u32
 
+    /// A 128-bit hash value, split into parts because wasm doesn't have a
+    /// 128-bit integer type.
+    record metadata-hash-value {
+       /// 64 bits of a 128-bit hash value.
+       lower: u64,
+       /// Another 64 bits of a 128-bit hash value.
+       upper: u64,
+    }
+
     /// Return a stream for reading from a file, if available.
     ///
     /// May fail with an error-code describing why the file cannot be read.
@@ -814,7 +823,7 @@ interface types {
     ///    computed hash.
     ///
     /// However, none of these is required.
-    metadata-hash: func() -> result<tuple<u64, u64>, error-code>
+    metadata-hash: func() -> result<metadata-hash-value, error-code>
 
     /// Return a hash of the metadata associated with a filesystem object referred
     /// to by a directory descriptor and a relative path.
@@ -825,5 +834,5 @@ interface types {
         path-flags: path-flags,
         /// The relative path of the file or directory to inspect.
         path: string,
-    ) -> result<tuple<u64, u64>, error-code>
+    ) -> result<metadata-hash-value, error-code>
 }
