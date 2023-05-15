@@ -1389,7 +1389,8 @@ to by a descriptor.</p>
 <p>This returns a hash of the last-modification timestamp and file size, and
 may also include the inode number, device number, birth timestamp, and
 other metadata fields that may change when the file is modified or
-replaced.</p>
+replaced. It may also include a secret value chosen by the
+implementation and not otherwise exposed.</p>
 <p>Implementations are encourated to provide the following properties:</p>
 <ul>
 <li>If the file is not modified or replaced, the computed hash value should
