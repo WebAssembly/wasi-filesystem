@@ -110,10 +110,20 @@ interface types {
         /// length in bytes of the pathname contained in the symbolic link.
         size: filesize,
         /// Last data access timestamp.
+        ///
+        /// A value of 0 indicates the platform doesn't maintain an access
+        /// timestamp for this file.
         data-access-timestamp: datetime,
         /// Last data modification timestamp.
+        ///
+        /// A value of 0 indicates the platform doesn't maintain a
+        /// modification timestamp for this file.
         data-modification-timestamp: datetime,
-        /// Last file status change timestamp.
+        /// Last file status-change timestamp.
+        ///
+        /// A value of 0 indicates the platform doesn't maintain a
+        /// status-change timestamp for this file.
+        data-modification-timestamp: datetime,
         status-change-timestamp: datetime,
     }
 
