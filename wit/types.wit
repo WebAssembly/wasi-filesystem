@@ -123,7 +123,6 @@ interface types {
         ///
         /// A value of 0 indicates the platform doesn't maintain a
         /// status-change timestamp for this file.
-        data-modification-timestamp: datetime,
         status-change-timestamp: datetime,
     }
 
