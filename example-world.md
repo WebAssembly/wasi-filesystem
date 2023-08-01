@@ -1391,6 +1391,7 @@ wasi-filesystem does not expose device and inode numbers, so this function
 may be used instead.</p>
 <h5>Params</h5>
 <ul>
+<li><a name="is_same_object.this"><code>this</code></a>: <a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a></li>
 <li><a name="is_same_object.other"><code>other</code></a>: <a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a></li>
 </ul>
 <h5>Return values</h5>
