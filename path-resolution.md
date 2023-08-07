@@ -28,7 +28,7 @@ directories outside the sandbox.
 
 Plain `openat` doesn't perform any sandboxing; it will readily open paths
 containing ".." or starting with "/", or symlinks to paths containing ".."
-or start with "/". It has an `O_NOFOLLOW` flag, however this flag only
+or starting with "/". It has an `O_NOFOLLOW` flag, however this flag only
 applies to the last component of the path (eg. the "c" in "a/b/c"). So
 the strategy for using `openat` to implement sandboxing is to split paths
 into components (eg. "a", "b", "c") and open them one component at a time,
@@ -65,7 +65,7 @@ On Linux, `openat2` with `RESOLVE_BENEATH` may be used to implement many
 system calls other than just "open" by utilizing Linux's`O_PATH` and
 "/proc/self/fd" features.
 
-On Windows, the `NtCreateFile` function can accept a directory handle and
+On Windows, the [`NtCreateFile`] function can accept a directory handle and
 can behave like an `openat` function.
 
 The Rust library [cap-std] implements WASI's filesystem sandboxing semantics,
@@ -77,7 +77,8 @@ that repository is no longer maintained.
 
 [implementation of the manual technique in C]: https://github.com/NuxiNL/cloudabi-utils/blob/master/src/libemulator/posix.c#L1205
 [cap-std]: https://github.com/bytecodealliance/cap-std
-[Linux's `openat2`] https://man7.org/linux/man-pages/man2/openat2.2.html
+[Linux's `openat2`]: https://man7.org/linux/man-pages/man2/openat2.2.html
 [CloudABI]: https://github.com/NuxiNL/cloudabi
 [Capsicum]: https://wiki.freebsd.org/Capsicum
 [FreeBSD's `open`]: https://man.freebsd.org/cgi/man.cgi?sektion=2&query=open
+[`NtCreateFile`]: https://learn.microsoft.com/en-us/windows/win32/api/winternl/nf-winternl-ntcreatefile
