@@ -16,13 +16,17 @@ a pair of values: a base directory handle, and a relative path. Absolute
 paths are not permitted, and there is no global namespace. All path
 accesses are relative to a base directory handle.
 
-Path resolution is constraint to occur within the subfilesystem referenced
+Path resolution is constrained to occur within the subfilesystem referenced
 by the base handle. Information about the filesystem outside of the base
 directory handles is not visible. In particular, it's not permitted to use
 paths that temporarily step outside the sandbox with something like
 "../../../stuff/here", even if the final resolved path is back inside the
 sandbox, because that would leak information about the existence of
 directories outside the sandbox.
+
+And, the sandboxing is designed to be implementable even in the presence
+of outside processes accessing the same filesystem, including renaming,
+unlinking, and creating new files and directories.
 
 ## Implementing path resolution manually
 
