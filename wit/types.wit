@@ -111,19 +111,19 @@ interface types {
         size: filesize,
         /// Last data access timestamp.
         ///
-        /// A value of 0 indicates the platform doesn't maintain an access
+        /// If the `option` is none, the platform doesn't maintain an access
         /// timestamp for this file.
-        data-access-timestamp: datetime,
+        data-access-timestamp: option<datetime>,
         /// Last data modification timestamp.
         ///
-        /// A value of 0 indicates the platform doesn't maintain a
+        /// If the `option` is none, the platform doesn't maintain a
         /// modification timestamp for this file.
-        data-modification-timestamp: datetime,
+        data-modification-timestamp: option<datetime>,
         /// Last file status-change timestamp.
         ///
-        /// A value of 0 indicates the platform doesn't maintain a
+        /// If the `option` is none, the platform doesn't maintain a
         /// status-change timestamp for this file.
-        status-change-timestamp: datetime,
+        status-change-timestamp: option<datetime>,
     }
 
     /// Flags determining the method of how paths are resolved.
