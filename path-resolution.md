@@ -16,7 +16,7 @@ a pair of values: a base directory handle, and a relative path. Absolute
 paths are not permitted, and there is no global namespace. All path
 accesses are relative to a base directory handle.
 
-Path resolution is constrained to occur within the subfilesystem referenced
+Path resolution is constrained to occur within the sub-filesystem referenced
 by the base handle. Information about the filesystem outside of the base
 directory handles is not visible. In particular, it's not permitted to use
 paths that temporarily step outside the sandbox with something like
