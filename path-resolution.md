@@ -24,7 +24,7 @@ paths that temporarily step outside the sandbox with something like
 sandbox, because that would leak information about the existence of
 directories outside the sandbox.
 
-And, the sandboxing is designed to be implementable even in the presence
+Importantly, the sandboxing is designed to be implementable even in the presence
 of outside processes accessing the same filesystem, including renaming,
 unlinking, and creating new files and directories.
 
