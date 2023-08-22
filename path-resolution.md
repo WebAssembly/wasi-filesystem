@@ -28,7 +28,22 @@ Importantly, the sandboxing is designed to be implementable even in the presence
 of outside processes accessing the same filesystem, including renaming,
 unlinking, and creating new files and directories.
 
-## Implementing path resolution manually
+## Symlinks
+
+Creating a symlink with an absolute path string fails with a "not permitted"
+error.
+
+Other than that, symlinks may be created with any string, provided the
+underlying filesystem implementation supports it.
+
+Sandboxing for symlink strings is performed at the time of an access, when a
+path is being resolved, and not at the time that the symlink is created or
+moved. This ensures that the sandbox is respected even if there are symlinks
+created or renamed by other entities with access to the filesystem.
+
+## Host Implementation
+
+### Implementing path resolution manually
 
 Plain `openat` doesn't perform any sandboxing; it will readily open paths
 containing ".." or starting with "/", or symlinks to paths containing ".."
@@ -50,27 +65,15 @@ component list. If the list was empty, that represents an attempt to use
 ".." to step outside the sandbox, so path resolution should fail with an
 "access denied" error message.
 
-## Symlinks
+### Implementation notes
 
-Creating a symlink with an absolute path string fails with a "not permitted"
-error.
-
-Other than that, symlinks may be created with any string, provided the
-underlying filesystem implementation supports it.
-
-Sandboxing for symlink strings is performed at the time of an access, when a
-path is being resolved, and not at the time that the symlink is created or
-moved. This ensures that the sandbox is respected even if there are symlinks
-created or renamed by other entities with access to the filesystem.
-
-## Implementation notes
-
-On Linux, `openat2` with `RESOLVE_BENEATH` may be used to implement many
-system calls other than just "open" by utilizing Linux's`O_PATH` and
-"/proc/self/fd" features.
+On Linux, `openat2` with `RESOLVE_BENEATH` may be used as an optimization to
+implement many system calls other than just "open" by utilizing Linux's
+`O_PATH` and "/proc/self/fd" features.
 
 On Windows, the [`NtCreateFile`] function can accept a directory handle and
-can behave like an `openat` function.
+can behave like an `openat` function, which can be used in the
+[manual algorithm](implementing-path-resolution-manually).
 
 The Rust library [cap-std] implements WASI's filesystem sandboxing semantics,
 but is otherwise independent of WASI or Wasm, so it can be reused in other
