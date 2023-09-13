@@ -901,7 +901,6 @@ file and they do not interfere with each other.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.read_via_stream.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.read_via_stream.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.read_via_stream.offset"><code>offset</code></a>: <a href="#filesize"><a href="#filesize"><code>filesize</code></a></a></li>
 </ul>
 <h5>Return values</h5>
@@ -916,7 +915,6 @@ POSIX.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.write_via_stream.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.write_via_stream.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.write_via_stream.offset"><code>offset</code></a>: <a href="#filesize"><a href="#filesize"><code>filesize</code></a></a></li>
 </ul>
 <h5>Return values</h5>
@@ -931,7 +929,6 @@ POSIX.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.append_via_stream.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.append_via_stream.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -943,7 +940,6 @@ POSIX.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.advise.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.advise.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.advise.offset"><code>offset</code></a>: <a href="#filesize"><a href="#filesize"><code>filesize</code></a></a></li>
 <li><a name="method_descriptor.advise.length"><code>length</code></a>: <a href="#filesize"><a href="#filesize"><code>filesize</code></a></a></li>
 <li><a name="method_descriptor.advise.advice"><a href="#advice"><code>advice</code></a></a>: <a href="#advice"><a href="#advice"><code>advice</code></a></a></li>
@@ -960,7 +956,6 @@ opened for writing.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.sync_data.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.sync_data.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -974,7 +969,6 @@ from <code>fdstat_get</code> in earlier versions of WASI.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.get_flags.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.get_flags.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -991,7 +985,6 @@ from <code>fdstat_get</code> in earlier versions of WASI.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.get_type.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.get_type.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -1004,7 +997,6 @@ extra bytes are filled with zeros.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.set_size.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.set_size.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.set_size.size"><code>size</code></a>: <a href="#filesize"><a href="#filesize"><code>filesize</code></a></a></li>
 </ul>
 <h5>Return values</h5>
@@ -1018,7 +1010,6 @@ extra bytes are filled with zeros.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.set_times.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.set_times.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.set_times.data_access_timestamp"><code>data-access-timestamp</code></a>: <a href="#new_timestamp"><a href="#new_timestamp"><code>new-timestamp</code></a></a></li>
 <li><a name="method_descriptor.set_times.data_modification_timestamp"><code>data-modification-timestamp</code></a>: <a href="#new_timestamp"><a href="#new_timestamp"><code>new-timestamp</code></a></a></li>
 </ul>
@@ -1038,7 +1029,6 @@ if the I/O operation is interrupted.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.read.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.read.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.read.length"><code>length</code></a>: <a href="#filesize"><a href="#filesize"><code>filesize</code></a></a></li>
 <li><a name="method_descriptor.read.offset"><code>offset</code></a>: <a href="#filesize"><a href="#filesize"><code>filesize</code></a></a></li>
 </ul>
@@ -1056,7 +1046,6 @@ the write set to zero.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.write.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.write.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.write.buffer"><code>buffer</code></a>: list&lt;<code>u8</code>&gt;</li>
 <li><a name="method_descriptor.write.offset"><code>offset</code></a>: <a href="#filesize"><a href="#filesize"><code>filesize</code></a></a></li>
 </ul>
@@ -1075,7 +1064,6 @@ do not interfere with each other.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.read_directory.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.read_directory.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -1089,7 +1077,6 @@ opened for writing.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.sync.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.sync.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -1101,7 +1088,6 @@ opened for writing.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.create_directory_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.create_directory_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.create_directory_at.path"><code>path</code></a>: <code>string</code></li>
 </ul>
 <h5>Return values</h5>
@@ -1119,7 +1105,6 @@ modified, use <code>metadata-hash</code>.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.stat.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.stat.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -1134,7 +1119,6 @@ discussion of alternatives.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.stat_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.stat_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.stat_at.path_flags"><a href="#path_flags"><code>path-flags</code></a></a>: <a href="#path_flags"><a href="#path_flags"><code>path-flags</code></a></a></li>
 <li><a name="method_descriptor.stat_at.path"><code>path</code></a>: <code>string</code></li>
 </ul>
@@ -1150,7 +1134,6 @@ WASI.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.set_times_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.set_times_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.set_times_at.path_flags"><a href="#path_flags"><code>path-flags</code></a></a>: <a href="#path_flags"><a href="#path_flags"><code>path-flags</code></a></a></li>
 <li><a name="method_descriptor.set_times_at.path"><code>path</code></a>: <code>string</code></li>
 <li><a name="method_descriptor.set_times_at.data_access_timestamp"><code>data-access-timestamp</code></a>: <a href="#new_timestamp"><a href="#new_timestamp"><code>new-timestamp</code></a></a></li>
@@ -1166,7 +1149,6 @@ WASI.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.link_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.link_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.link_at.old_path_flags"><code>old-path-flags</code></a>: <a href="#path_flags"><a href="#path_flags"><code>path-flags</code></a></a></li>
 <li><a name="method_descriptor.link_at.old_path"><code>old-path</code></a>: <code>string</code></li>
 <li><a name="method_descriptor.link_at.new_descriptor"><code>new-descriptor</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
@@ -1194,7 +1176,6 @@ contains <code>truncate</code> or <code>create</code>, and the base descriptor d
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.open_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.open_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.open_at.path_flags"><a href="#path_flags"><code>path-flags</code></a></a>: <a href="#path_flags"><a href="#path_flags"><code>path-flags</code></a></a></li>
 <li><a name="method_descriptor.open_at.path"><code>path</code></a>: <code>string</code></li>
 <li><a name="method_descriptor.open_at.open_flags"><a href="#open_flags"><code>open-flags</code></a></a>: <a href="#open_flags"><a href="#open_flags"><code>open-flags</code></a></a></li>
@@ -1213,7 +1194,6 @@ filesystem, this function fails with <a href="#error_code.not_permitted"><code>e
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.readlink_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.readlink_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.readlink_at.path"><code>path</code></a>: <code>string</code></li>
 </ul>
 <h5>Return values</h5>
@@ -1227,7 +1207,6 @@ filesystem, this function fails with <a href="#error_code.not_permitted"><code>e
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.remove_directory_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.remove_directory_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.remove_directory_at.path"><code>path</code></a>: <code>string</code></li>
 </ul>
 <h5>Return values</h5>
@@ -1240,7 +1219,6 @@ filesystem, this function fails with <a href="#error_code.not_permitted"><code>e
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.rename_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.rename_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.rename_at.old_path"><code>old-path</code></a>: <code>string</code></li>
 <li><a name="method_descriptor.rename_at.new_descriptor"><code>new-descriptor</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.rename_at.new_path"><code>new-path</code></a>: <code>string</code></li>
@@ -1257,7 +1235,6 @@ filesystem, this function fails with <a href="#error_code.not_permitted"><code>e
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.symlink_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.symlink_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.symlink_at.old_path"><code>old-path</code></a>: <code>string</code></li>
 <li><a name="method_descriptor.symlink_at.new_path"><code>new-path</code></a>: <code>string</code></li>
 </ul>
@@ -1276,7 +1253,6 @@ entities.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.access_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.access_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.access_at.path_flags"><a href="#path_flags"><code>path-flags</code></a></a>: <a href="#path_flags"><a href="#path_flags"><code>path-flags</code></a></a></li>
 <li><a name="method_descriptor.access_at.path"><code>path</code></a>: <code>string</code></li>
 <li><a name="method_descriptor.access_at.type"><code>type</code></a>: <a href="#access_type"><a href="#access_type"><code>access-type</code></a></a></li>
@@ -1292,7 +1268,6 @@ Note: This is similar to <code>unlinkat(fd, path, 0)</code> in POSIX.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.unlink_file_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.unlink_file_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.unlink_file_at.path"><code>path</code></a>: <code>string</code></li>
 </ul>
 <h5>Return values</h5>
@@ -1307,7 +1282,6 @@ filesystem-specific.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.change_file_permissions_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.change_file_permissions_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.change_file_permissions_at.path_flags"><a href="#path_flags"><code>path-flags</code></a></a>: <a href="#path_flags"><a href="#path_flags"><code>path-flags</code></a></a></li>
 <li><a name="method_descriptor.change_file_permissions_at.path"><code>path</code></a>: <code>string</code></li>
 <li><a name="method_descriptor.change_file_permissions_at.modes"><a href="#modes"><code>modes</code></a></a>: <a href="#modes"><a href="#modes"><code>modes</code></a></a></li>
@@ -1327,7 +1301,6 @@ flag. <code>read</code> on a directory implies readability and searchability, an
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.change_directory_permissions_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.change_directory_permissions_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.change_directory_permissions_at.path_flags"><a href="#path_flags"><code>path-flags</code></a></a>: <a href="#path_flags"><a href="#path_flags"><code>path-flags</code></a></a></li>
 <li><a name="method_descriptor.change_directory_permissions_at.path"><code>path</code></a>: <code>string</code></li>
 <li><a name="method_descriptor.change_directory_permissions_at.modes"><a href="#modes"><code>modes</code></a></a>: <a href="#modes"><a href="#modes"><code>modes</code></a></a></li>
@@ -1353,7 +1326,6 @@ locking, this function returns <a href="#error_code.unsupported"><code>error-cod
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.lock_shared.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.lock_shared.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -1378,7 +1350,6 @@ locking, this function returns <a href="#error_code.unsupported"><code>error-cod
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.lock_exclusive.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.lock_exclusive.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -1402,7 +1373,6 @@ locking, this function returns <a href="#error_code.unsupported"><code>error-cod
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.try_lock_shared.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.try_lock_shared.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -1428,7 +1398,6 @@ locking, this function returns <a href="#error_code.unsupported"><code>error-cod
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.try_lock_exclusive.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.try_lock_exclusive.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -1440,7 +1409,6 @@ locking, this function returns <a href="#error_code.unsupported"><code>error-cod
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.unlock.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.unlock.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -1455,7 +1423,6 @@ may be used instead.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.is_same_object.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.is_same_object.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.is_same_object.other"><code>other</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
@@ -1483,7 +1450,6 @@ computed hash.</li>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.metadata_hash.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.metadata_hash.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -1496,7 +1462,6 @@ to by a directory descriptor and a relative path.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.metadata_hash_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.metadata_hash_at.this"><code>this</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.metadata_hash_at.path_flags"><a href="#path_flags"><code>path-flags</code></a></a>: <a href="#path_flags"><a href="#path_flags"><code>path-flags</code></a></a></li>
 <li><a name="method_descriptor.metadata_hash_at.path"><code>path</code></a>: <code>string</code></li>
 </ul>
