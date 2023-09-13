@@ -1,14 +1,9 @@
 [clocks]
-url = "https://github.com/WebAssembly/wasi-clocks/archive/main.tar.gz"
-sha256 = "1ed7e35b3f9738663854f0dd92a95bfadc410ea07170501f5c2fec0cc24e3d57"
-sha512 = "ef1e23704a8a8436fd3718593d4c4d8b6d1c64dad3595b7496c0888ca14b725046f2900109800faca1bc8c14f237cdcaca791dba8284e1ad50105ab2d036825b"
+url = "https://github.com/sunfishcode/wasi-clocks/archive/resources.tar.gz"
+sha256 = "ea955af7a152f85941b651c5b07345c4f077ae7f9e996c909ab8cc0a68c0120e"
+sha512 = "114bc4f583a487cf1ccfdd6efa25c4c60cf637d4501a189eebd4b1d52aec2c8eb63ae14ce494db53dfd25bc20f6c4b533dc6f2143537e5cd14ca80d5d4b6a49d"
 
 [io]
-url = "https://github.com/WebAssembly/wasi-io/archive/main.tar.gz"
-sha256 = "a47690f7d4dba1683a42897cc65fe813409827d72cc93afe03b127ee81763e13"
-sha512 = "661aa9cf9c67d7d712caccfbb3c317da01b033764892623c8902d9dcfdb67f3088889102b036d3ed19d818a5c2d151247b25d9f6fd145cdf433f325605a5a747"
-
-[poll]
-url = "https://github.com/WebAssembly/wasi-poll/archive/main.tar.gz"
-sha256 = "d4c27124f4c137eb538b5c92ba5858ed9042e11b24a2eef85d14becd0b7f55de"
-sha512 = "422c01b273b4b1377ece6f2e4ba0dfc609ca8ef30a3e0be0e172e1303fcf7b3ca4c470f4dea6c51bdf114b0f5c871ebc4934dfe3bf217d66ea689748df2b1e55"
+url = "https://github.com/sunfishcode/wasi-io/archive/resources.tar.gz"
+sha256 = "c01495e96837dbd33b8d8dd70b75a0bf2ee5795b6c85ab50701e870bbcf2ceb3"
+sha512 = "fd8f60fad6560396d07d530efb76a4c54ce823d523528ba5ba61ccdc521e361c1e9660d0a77c02a5e6b80ea981cddedbaa703322f1ba502333784ea974edb835"
