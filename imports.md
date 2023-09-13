@@ -34,7 +34,7 @@ the pollables has an error, it is indicated by marking the source as
 being reaedy for I/O.</p>
 <h5>Params</h5>
 <ul>
-<li><a name="poll_list.in"><code>in</code></a>: list&lt;own&lt;<a href="#pollable"><a href="#pollable"><code>pollable</code></a></a>&gt;&gt;</li>
+<li><a name="poll_list.in"><code>in</code></a>: list&lt;borrow&lt;<a href="#pollable"><a href="#pollable"><code>pollable</code></a></a>&gt;&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
@@ -46,7 +46,7 @@ being reaedy for I/O.</p>
 pollable. When it returns, the handle is ready for I/O.</p>
 <h5>Params</h5>
 <ul>
-<li><a name="poll_one.in"><code>in</code></a>: own&lt;<a href="#pollable"><a href="#pollable"><code>pollable</code></a></a>&gt;</li>
+<li><a name="poll_one.in"><code>in</code></a>: borrow&lt;<a href="#pollable"><a href="#pollable"><code>pollable</code></a></a>&gt;</li>
 </ul>
 <h2><a name="wasi:io_streams">Import interface wasi:io/streams</a></h2>
 <p>WASI I/O is an I/O abstraction API which is currently focused on providing

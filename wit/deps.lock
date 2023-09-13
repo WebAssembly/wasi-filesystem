@@ -5,5 +5,5 @@ sha512 = "114bc4f583a487cf1ccfdd6efa25c4c60cf637d4501a189eebd4b1d52aec2c8eb63ae1
 
 [io]
 url = "https://github.com/sunfishcode/wasi-io/archive/resources.tar.gz"
-sha256 = "c01495e96837dbd33b8d8dd70b75a0bf2ee5795b6c85ab50701e870bbcf2ceb3"
-sha512 = "fd8f60fad6560396d07d530efb76a4c54ce823d523528ba5ba61ccdc521e361c1e9660d0a77c02a5e6b80ea981cddedbaa703322f1ba502333784ea974edb835"
+sha256 = "6e20bcf4d4f5466b60c05ea8da7289ca361a7febdd22ab1a531e5ef7e394ab8d"
+sha512 = "21f6689bce6ed6d9e3bd96372e5c7ed003a7aefbf8d49b4eea949dfbd265cf57a0d7dc67aa71e3de75d48fcc2c0cfe5f06f7e9e7959a23bc98f77da85f4161b9"
