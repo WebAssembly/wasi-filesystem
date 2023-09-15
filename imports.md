@@ -1151,7 +1151,7 @@ WASI.</p>
 <li><a name="method_descriptor.link_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.link_at.old_path_flags"><code>old-path-flags</code></a>: <a href="#path_flags"><a href="#path_flags"><code>path-flags</code></a></a></li>
 <li><a name="method_descriptor.link_at.old_path"><code>old-path</code></a>: <code>string</code></li>
-<li><a name="method_descriptor.link_at.new_descriptor"><code>new-descriptor</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
+<li><a name="method_descriptor.link_at.new_descriptor"><code>new-descriptor</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.link_at.new_path"><code>new-path</code></a>: <code>string</code></li>
 </ul>
 <h5>Return values</h5>
@@ -1220,7 +1220,7 @@ filesystem, this function fails with <a href="#error_code.not_permitted"><code>e
 <ul>
 <li><a name="method_descriptor.rename_at.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.rename_at.old_path"><code>old-path</code></a>: <code>string</code></li>
-<li><a name="method_descriptor.rename_at.new_descriptor"><code>new-descriptor</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
+<li><a name="method_descriptor.rename_at.new_descriptor"><code>new-descriptor</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 <li><a name="method_descriptor.rename_at.new_path"><code>new-path</code></a>: <code>string</code></li>
 </ul>
 <h5>Return values</h5>
@@ -1423,7 +1423,7 @@ may be used instead.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.is_same_object.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
-<li><a name="method_descriptor.is_same_object.other"><code>other</code></a>: own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
+<li><a name="method_descriptor.is_same_object.other"><code>other</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
