@@ -931,7 +931,7 @@ POSIX.</p>
 <p>Return a stream for appending to a file, if available.</p>
 <p>May fail with an error-code describing why the file cannot be appended.</p>
 <p>Note: This allows using <code>write-stream</code>, which is similar to <code>write</code> with
-<code>O_APPEND</code> in in POSIX.</p>
+<code>O_APPEND</code> in POSIX.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_descriptor.append_via_stream.self"><code>self</code></a>: borrow&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;</li>
@@ -1351,7 +1351,7 @@ errors are filesystem-related errors.</p>
 ----
 <h3>Functions</h3>
 <h4><a name="get_directories"><code>get-directories: func</code></a></h4>
-<p>Return the set of preopened directories, and their path.</p>
+<p>Return the set of preopened directories, and their paths.</p>
 <h5>Return values</h5>
 <ul>
 <li><a name="get_directories.0"></a> list&lt;(own&lt;<a href="#descriptor"><a href="#descriptor"><code>descriptor</code></a></a>&gt;, <code>string</code>)&gt;</li>
