@@ -188,8 +188,6 @@ interface types {
         would-block,
         /// Connection already in progress, similar to `EALREADY` in POSIX.
         already,
-        /// Bad descriptor, similar to `EBADF` in POSIX.
-        bad-descriptor,
         /// Device or resource busy, similar to `EBUSY` in POSIX.
         busy,
         /// Resource deadlock would occur, similar to `EDEADLK` in POSIX.
