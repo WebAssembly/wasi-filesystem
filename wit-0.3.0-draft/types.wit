@@ -299,12 +299,16 @@ interface types {
         /// Multiple read, write, and append streams may be active on the same open
         /// file and they do not interfere with each other.
         ///
+        /// This function returns a future, which will resolve to an optional error code,
+        /// if reading full contents of the file fails.
+        /// The future resolves to `none` once full contents of the file are read successfully.
+        ///
         /// Note: This is similar to `pread` in POSIX.
         @since(version = 0.3.0)
         read: func(
             /// The offset within the file at which to start reading.
             offset: filesize,
-        ) -> result<stream<u8>, error-code>;
+        ) -> result<tuple<stream<u8>, future<option<error-code>>>, error-code>;
 
         /// Return a stream for writing to a file, if available.
         ///
@@ -314,6 +318,10 @@ interface types {
         /// extent of the write, with bytes between the previous end and the start of
         /// the write set to zero.
         ///
+        /// This function returns a future, which will resolve to an optional error code,
+        /// if writing full contents of the stream fails.
+        /// The future resolves to `none` once full contents of the stream are written successfully.
+        ///
         /// Note: This is similar to `pwrite` in POSIX.
         @since(version = 0.3.0)
         write: func(
@@ -321,15 +329,19 @@ interface types {
             data: stream<u8>,
             /// The offset within the file at which to start writing.
             offset: filesize,
-        ) -> result<_, error-code>;
+        ) -> result<future<option<error-code>>, error-code>;
 
         /// Return a stream for appending to a file, if available.
         ///
         /// May fail with an error-code describing why the file cannot be appended.
         ///
+        /// This function returns a future, which will resolve to an optional error code,
+        /// if writing full contents of the stream fails.
+        /// The future resolves to `none` once full contents of the stream are written successfully.
+        ///
         /// Note: This is similar to `write` with `O_APPEND` in POSIX.
         @since(version = 0.3.0)
-        append: func(data: stream<u8>) -> result<_, error-code>;
+        append: func(data: stream<u8>) -> result<future<option<error-code>>, error-code>;
 
         /// Provide file advisory information on a descriptor.
         ///
@@ -620,17 +632,4 @@ interface types {
         @since(version = 0.2.0)
         read-directory-entry: func() -> result<option<directory-entry>, error-code>;
     }
-
-    /// Attempts to extract a filesystem-related `error-code` from the stream
-    /// `error-context` provided.
-    ///
-    /// Stream operations which return `stream-error::last-operation-failed`
-    /// have a payload with more information about the operation that failed.
-    /// This payload can be passed through to this function to see if there's
-    /// filesystem-related information about the error to return.
-    ///
-    /// Note that this function is fallible because not all stream-related
-    /// errors are filesystem-related errors.
-    @since(version = 0.3.0)
-    filesystem-error-code: func(err: error-context) -> option<error-code>;
 }
