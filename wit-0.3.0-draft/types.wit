@@ -411,8 +411,11 @@ interface types {
         /// This always returns a new stream which starts at the beginning of the
         /// directory. Multiple streams may be active on the same directory, and they
         /// do not interfere with each other.
+        ///
+        /// This function returns a future, which will resolve to an error code if
+        /// reading full contents of the directory fails.
         @since(version = 0.3.0)
-        read-directory: func() -> result<directory-entry-stream, error-code>;
+        read-directory: func() -> tuple<stream<directory-entry>, future<result<_, error-code>>>;
 
         /// Synchronize the data and metadata of a file to disk.
         ///
@@ -618,13 +621,5 @@ interface types {
             /// The relative path of the file or directory to inspect.
             path: string,
         ) -> result<metadata-hash-value, error-code>;
-    }
-
-    /// A stream of directory entries.
-    @since(version = 0.3.0)
-    resource directory-entry-stream {
-        /// Read a single directory entry from a `directory-entry-stream`.
-        @since(version = 0.3.0)
-        read-directory-entry: func() -> result<option<directory-entry>, error-code>;
     }
 }
