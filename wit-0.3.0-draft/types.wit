@@ -292,23 +292,20 @@ interface types {
     /// calls may be made.
     @since(version = 0.3.0)
     resource descriptor {
-        /// Return a stream for reading from a file, if available.
-        ///
-        /// May fail with an error-code describing why the file cannot be read.
+        /// Return a stream for reading from a file.
         ///
         /// Multiple read, write, and append streams may be active on the same open
         /// file and they do not interfere with each other.
         ///
-        /// This function returns a future, which will resolve to an optional error code,
-        /// if reading full contents of the file fails.
-        /// The future resolves to `none` once full contents of the file are read successfully.
+        /// This function returns a future, which will resolve to an error code if
+        /// reading full contents of the file fails.
         ///
         /// Note: This is similar to `pread` in POSIX.
         @since(version = 0.3.0)
-        read: func(
+        read-via-stream: func(
             /// The offset within the file at which to start reading.
             offset: filesize,
-        ) -> result<tuple<stream<u8>, future<option<error-code>>>, error-code>;
+        ) -> tuple<stream<u8>, future<result<_, error-code>>>;
 
         /// Return a stream for writing to a file, if available.
         ///
@@ -318,30 +315,28 @@ interface types {
         /// extent of the write, with bytes between the previous end and the start of
         /// the write set to zero.
         ///
-        /// This function returns a future, which will resolve to an optional error code,
-        /// if writing full contents of the stream fails.
-        /// The future resolves to `none` once full contents of the stream are written successfully.
+        /// This function returns once either full contents of the stream are
+        /// written or an error is encountered.
         ///
         /// Note: This is similar to `pwrite` in POSIX.
         @since(version = 0.3.0)
-        write: func(
+        write-via-stream: func(
             /// Data to write
             data: stream<u8>,
             /// The offset within the file at which to start writing.
             offset: filesize,
-        ) -> result<future<option<error-code>>, error-code>;
+        ) -> result<_, error-code>;
 
         /// Return a stream for appending to a file, if available.
         ///
         /// May fail with an error-code describing why the file cannot be appended.
         ///
-        /// This function returns a future, which will resolve to an optional error code,
-        /// if writing full contents of the stream fails.
-        /// The future resolves to `none` once full contents of the stream are written successfully.
+        /// This function returns once either full contents of the stream are
+        /// written or an error is encountered.
         ///
         /// Note: This is similar to `write` with `O_APPEND` in POSIX.
         @since(version = 0.3.0)
-        append: func(data: stream<u8>) -> result<future<option<error-code>>, error-code>;
+        append-via-stream: func(data: stream<u8>) -> result<_, error-code>;
 
         /// Provide file advisory information on a descriptor.
         ///
