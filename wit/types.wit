@@ -186,10 +186,6 @@ interface types {
         access,
         /// Resource unavailable, or operation would block, similar to `EAGAIN` and `EWOULDBLOCK` in POSIX.
         would-block,
-        /// Connection already in progress, similar to `EALREADY` in POSIX.
-        already,
-        /// Bad descriptor, similar to `EBADF` in POSIX.
-        bad-descriptor,
         /// Device or resource busy, similar to `EBUSY` in POSIX.
         busy,
         /// Resource deadlock would occur, similar to `EDEADLK` in POSIX.
@@ -202,8 +198,6 @@ interface types {
         file-too-large,
         /// Illegal byte sequence, similar to `EILSEQ` in POSIX.
         illegal-byte-sequence,
-        /// Operation in progress, similar to `EINPROGRESS` in POSIX.
-        in-progress,
         /// Interrupted function, similar to `EINTR` in POSIX.
         interrupted,
         /// Invalid argument, similar to `EINVAL` in POSIX.
@@ -216,8 +210,6 @@ interface types {
         loop,
         /// Too many links, similar to `EMLINK` in POSIX.
         too-many-links,
-        /// Message too large, similar to `EMSGSIZE` in POSIX.
-        message-size,
         /// Filename too long, similar to `ENAMETOOLONG` in POSIX.
         name-too-long,
         /// No such device, similar to `ENODEV` in POSIX.
