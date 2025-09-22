@@ -602,11 +602,18 @@ interface types {
         /// Return a hash of the metadata associated with a filesystem object referred
         /// to by a descriptor.
         ///
-        /// This returns a hash of the last-modification timestamp and file size, and
-        /// may also include the inode number, device number, birth timestamp, and
-        /// other metadata fields that may change when the file is modified or
-        /// replaced. It may also include a secret value chosen by the
-        /// implementation and not otherwise exposed.
+        /// This returns a hash of the last-modification timestamp and file
+        /// size, and may also include the inode number, device number, birth
+        /// timestamp, and other metadata fields that may change when the file
+        /// is modified or replaced. It may also include a secret value chosen
+        /// by the implementation and not otherwise exposed. The hash function
+        /// produces a 128-bit value to return to the user, with entropy from
+        /// the metadata spread evenly over the bits of the hash.
+        ///
+        /// Implementations should ensure that it is vanishingly unlikely that
+        /// two different files have the same metadata hash value. An
+        /// implementation should return `error-code::not-supported` unless it
+        /// has at least 64 bits of metadata to feed into the hash function.
         ///
         /// Implementations are encouraged to provide the following properties:
         ///
