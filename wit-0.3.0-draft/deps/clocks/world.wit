@@ -1,11 +1,11 @@
-package wasi:clocks@0.3.0-rc-2025-09-16;
+package wasi:clocks@0.3.0-rc-2025-10-20;
 
-@since(version = 0.3.0-rc-2025-09-16)
+@since(version = 0.3.0-rc-2025-10-20)
 world imports {
-    @since(version = 0.3.0-rc-2025-09-16)
+    @since(version = 0.3.0-rc-2025-10-20)
     import monotonic-clock;
-    @since(version = 0.3.0-rc-2025-09-16)
-    import wall-clock;
+    @since(version = 0.3.0-rc-2025-10-20)
+    import system-clock;
     @unstable(feature = clocks-timezone)
     import timezone;
 }
