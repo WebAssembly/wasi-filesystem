@@ -2,6 +2,9 @@
 
 A proposed [WebAssembly System Interface](https://github.com/WebAssembly/WASI) API.
 
+> [!IMPORTANT]
+> This repository has been merged into the main [WebAssembly/WASI](https://github.com/webassembly/wasi) repository and is now archived.
+
 ### Current Phase
 
 WASI-filesystem is currently in [Phase 3].
